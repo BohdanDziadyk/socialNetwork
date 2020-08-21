@@ -8,15 +8,15 @@ import {CommentResolveService} from './services/comment-resolve.service';
 
 
 
+// @ts-ignore
 @NgModule({
   declarations: [AllCommentsComponent, CommentComponent],
   imports: [
     CommonModule,
     HttpClientModule,
     RouterModule.forChild([
-      {path: '', component: AllCommentsComponent, resolve: {fetchedComments: CommentResolveService}, children: [
-          {path: ':id', component: CommentComponent}
-        ]}
+      {path: '', component: AllCommentsComponent, resolve: {fetchedComments: CommentResolveService}},
+      {path: 'comments/:id', component: CommentComponent}
     ])
   ]
 })

@@ -5,7 +5,6 @@ import { UserComponent } from './user/user.component';
 import {RouterModule} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {UserResolveService} from './services/user-resolve.service';
-import {PostComponent} from "../post/post/post.component";
 
 
 
