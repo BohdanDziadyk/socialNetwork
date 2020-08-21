@@ -1,0 +1,4 @@
+<div *ngFor="let comment of comments">
+  <a routerLink="{{comment.id}}">{{comment.name}}</a>
+</div>
+<router-outlet></router-outlet>
