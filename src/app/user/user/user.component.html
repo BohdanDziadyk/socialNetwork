@@ -1,4 +1,4 @@
-<div style="float: left">
+<div style="float: left" *ngIf="user">
   <img class="avatar" src="https://lofrev.net/wp-content/photos/2017/05/user_logo.png">
   <h3 class="card-title text-light">{{user.name}}</h3>
   <h4 class="card-text text-light">Nickname:{{user.username}}</h4>
@@ -19,6 +19,7 @@
     <li><h4 class="card-text text-light">BS:{{user.company.bs}}</h4></li>
   </ul>
 </div>
+<h4 class="card-text text-light">Posts:</h4>
 <div class="list-group" *ngIf="posts">
   <div *ngFor="let post of posts">
     <a routerLink="posts/{{post.id}}" style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">

@@ -5,6 +5,7 @@ import { UserComponent } from './user/user.component';
 import {RouterModule} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {UserResolveService} from './services/user-resolve.service';
+import {PostComponent} from '../post/post/post.component';
 
 
 
@@ -15,7 +16,8 @@ import {UserResolveService} from './services/user-resolve.service';
     HttpClientModule,
     RouterModule.forChild([
       {path: '', component: AllUsersComponent, resolve: {fetchedUsers: UserResolveService}},
-      {path: 'users/:id', component: UserComponent}
+      {path: ':id', component: UserComponent},
+      {path: 'posts/:id', component: PostComponent}
     ])
   ]
 })
