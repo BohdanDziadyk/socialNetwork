@@ -18,7 +18,8 @@ import {HttpClientModule} from '@angular/common/http';
       {path: '', component: HomeComponent},
       {path: 'users', loadChildren : () => import('./user/user.module').then(m => m.UserModule)},
       {path: 'posts', loadChildren : () => import('./post/post.module').then(m => m.PostModule)},
-      {path: 'comments', loadChildren : () => import('./comment/comment.module').then(m => m.CommentModule)}
+      {path: 'comments', loadChildren : () => import('./comment/comment.module').then(m => m.CommentModule)},
+      {path: 'auth', loadChildren: () => import('./authorization/authorization.module').then(m => m.AuthorizationModule)}
     ])
   ],
   providers: [],
