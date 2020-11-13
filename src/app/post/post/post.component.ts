@@ -26,7 +26,7 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(value => this.postService.getPost(value.id)
-      .subscribe(value1 => this.userService.getUser(value1.userId).subscribe(value2 => this.user = value2)));
+      .subscribe(value1 => this.userService.getUser(value1.user).subscribe(value2 => this.user = value2)));
   }
 
 }

@@ -1,7 +1,10 @@
 export interface User {
+  id: number;
   name: string;
   username: string;
   email: string;
+  phone: string;
+  website: string;
   address_street: string;
   address_suite: string;
   address_city: string;

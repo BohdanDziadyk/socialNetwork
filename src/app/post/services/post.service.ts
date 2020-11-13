@@ -8,20 +8,20 @@ import {Post} from '../models/Post';
 })
 export class PostService {
   posts: Post[];
-
+  URL = `http://localhost:8000/posts/`;
   constructor(private httpClient: HttpClient) {
   }
 
   getAllPosts(): Observable<Post[]> {
-    return this.httpClient.get<Post[]>('https://jsonplaceholder.typicode.com/posts');
+    return this.httpClient.get<Post[]>(this.URL);
   }
 
   getPost(id): Observable<Post> {
-    return this.httpClient.get<Post>(`https://jsonplaceholder.typicode.com/posts/${id}`);
+    return this.httpClient.get<Post>(`${this.URL}${id}`);
   }
 
   getPostsByUserId(id): Observable<Post[]> {
-    return this.httpClient.get<Post[]>(`https://jsonplaceholder.typicode.com/posts?userId=${id}`);
+    return this.httpClient.get<Post[]>(`${this.URL}?user=${id}`);
   }
 }
 
