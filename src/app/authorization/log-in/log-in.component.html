@@ -1,10 +1,10 @@
-<div>
+<div class="form">
   <form [formGroup]="form">
     <small style="color: white">Field with * is required</small>
     <div>
-      <label style="color: white">Email*:</label>
-      <input type = email [formControl]="email" placeholder="Type tour email here">
-      <small style="color: white" *ngIf="form.controls.email.invalid">Please enter a valid email</small>
+      <label style="color: white">Username*:</label>
+      <input type = text [formControl]="username" placeholder="Type your username here">
+      <small style="color: white" *ngIf="form.controls.username.invalid">Please enter a valid username</small>
     </div>
     <div>
       <label style="color: white">Password*:</label>
@@ -12,10 +12,11 @@
       <small style="color: white" *ngIf="form.controls.password.invalid">Password must be from 8 to 16 symbols</small>
     </div>
     <div>
-      <label style="color: white">Password confirm*:</label>
-      <input type = password [formControl]="confirmPassword" placeholder="Confirm your password">
-      <small style="color: white" *ngIf="form.hasError('passwordError')">Passwords don`t match</small>
+<!--      <label style="color: white">Password confirm*:</label>-->
+<!--      <input type = password [formControl]="confirmPassword" placeholder="Confirm your password">-->
+<!--      <small style="color: white" *ngIf="form.hasError('passwordError')">Passwords don`t match</small>-->
     </div>
     <button [disabled]="form.invalid" type = submit (click)="logIn(form)">Log In</button>
+    <div *ngIf="error">{{error.errorDetail}}</div>
   </form>
 </div>

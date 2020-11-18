@@ -10,7 +10,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 @NgModule({
   declarations: [LogInComponent, RegisterComponent],
     imports: [
-        HttpClientModule,
+        //HttpClientModule,
         RouterModule.forChild([
             {path: 'login', component: LogInComponent},
             {path: 'registration', component: RegisterComponent}

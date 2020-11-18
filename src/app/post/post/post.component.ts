@@ -14,7 +14,8 @@ import {User} from "../../user/models/User";
 })
 export class PostComponent implements OnInit {
   @Input()
-  user: User;
+  postUser: User;
+  commentUser: User;
   post: Post;
   comments: Comment[];
   constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private postService: PostService,
@@ -26,7 +27,9 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(value => this.postService.getPost(value.id)
-      .subscribe(value1 => this.userService.getUser(value1.user).subscribe(value2 => this.user = value2)));
+      .subscribe(value1 => this.userService.getUser(value1.user).subscribe(value2 => this.postUser = value2)));
+    this.activatedRoute.params.subscribe(value => this.commentService.getComment(value.id)
+      .subscribe(value1 => this.userService.getUser(value1.user).subscribe(value2 => this.commentUser = value2)));
   }
 
 }

@@ -13,7 +13,7 @@ import {CommentResolveService} from './services/comment-resolve.service';
   declarations: [AllCommentsComponent, CommentComponent],
   imports: [
     CommonModule,
-    HttpClientModule,
+    //HttpClientModule,
     RouterModule.forChild([
       {path: '', component: AllCommentsComponent, resolve: {fetchedComments: CommentResolveService}},
       {path: 'comments/:id', component: CommentComponent}

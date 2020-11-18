@@ -1,19 +1,13 @@
 export interface User {
   id: number;
-  name: string;
+  first_name: string;
+  last_name: string;
   username: string;
   email: string;
   phone: string;
-  website: string;
-  address_street: string;
-  address_suite: string;
-  address_city: string;
-  address_zipcode: number;
-  address_geo_lat: number;
-  address_geo_lng: number;
-  company_name: string;
-  company_catch_phrase: string;
-  company_bs: string;
-  created_at: string;
-  updated_at: string;
+  last_login: string;
+  is_superuser: boolean;
+  is_staff: boolean;
+  is_active: boolean;
+  date_joined: string;
 }

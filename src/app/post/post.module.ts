@@ -12,7 +12,7 @@ import {PostResolveService} from './services/post-resolve.service';
   declarations: [AllPostsComponent, PostComponent],
   imports: [
     CommonModule,
-    HttpClientModule,
+    //HttpClientModule,
     RouterModule.forChild([
       {path: '', component: AllPostsComponent, resolve: {fetchedPosts: PostResolveService}},
       {path: 'posts/:id', component: PostComponent}

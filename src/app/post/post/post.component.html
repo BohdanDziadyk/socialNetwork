@@ -2,7 +2,7 @@
   <h1 class="display-4">{{post.title}}</h1>
   <p class="lead">{{post.body}}</p>
   <hr class="my-4">
-  <p *ngIf="user"> Author:{{user.name}}</p>
+  <p *ngIf="postUser"> Author:{{postUser.username}}</p>
 </div>
 <h4 class="card-text text-light">Comments:</h4>
 <div class="list-group" *ngIf="comments">
@@ -10,7 +10,7 @@
     <a routerLink="comment/{{comment.id}}" style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">{{comment.body}}</h5>
-        <small>Comment ID: {{comment.user}}</small>
+        <small>Comment ID: {{comment.id}}</small>
       </div>
       <small>Posted:{{comment.created_at}}</small>
       <small>Last update:{{comment.updated_at}}</small>

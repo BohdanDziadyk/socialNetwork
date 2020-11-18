@@ -4,7 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import {RouterModule} from '@angular/router';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {AppInterceptor} from "./app.interceptor";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,13 @@ import {HttpClientModule} from '@angular/common/http';
       {path: 'auth', loadChildren: () => import('./authorization/authorization.module').then(m => m.AuthorizationModule)}
     ])
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: AppInterceptor
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

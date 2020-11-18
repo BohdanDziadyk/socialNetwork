@@ -13,7 +13,7 @@ import {PostComponent} from '../post/post/post.component';
   declarations: [AllUsersComponent, UserComponent],
   imports: [
     CommonModule,
-    HttpClientModule,
+    //HttpClientModule,
     RouterModule.forChild([
       {path: '', component: AllUsersComponent, resolve: {fetchedUsers: UserResolveService}},
       {path: ':id', component: UserComponent},
