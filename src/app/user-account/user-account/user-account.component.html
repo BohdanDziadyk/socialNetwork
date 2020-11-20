@@ -1,0 +1,43 @@
+<div style="float: left" *ngIf="user">
+  <img class="avatar" src="https://lofrev.net/wp-content/photos/2017/05/user_logo.png">
+  <h3 class="card-title text-light">{{user.first_name}}</h3>
+  <h3 class="card-title text-light">{{user.last_name}}</h3>
+  <h4 class="card-text text-light">Nickname:{{user.username}}</h4>
+  <h4 class="card-text text-light">Email address:{{user.email}}</h4>
+<!--  <ul class="card-text text-light" style="font-size: 32px;font-weight: bold">Address:-->
+<!--    <li><h4 class="card-text text-light">Suite:{{user.address_suite}}</h4></li>-->
+<!--    <li><h4 class="card-text text-light">City:{{user.address_street}}</h4></li>-->
+<!--    <li><h4 class="card-text text-light">Street:{{user.address_city}}</h4></li>-->
+<!--    <li><h4 class="card-text text-light">ZIP:{{user.address_zipcode}}</h4></li>-->
+<!--    <li><h4 class="card-text text-light">Latitude:{{user.address_geo_lat}}</h4></li>-->
+<!--    <li><h4 class="card-text text-light">Longitude:{{user.address_geo_lng}}</h4></li>-->
+<!--  </ul>-->
+  <h4 class="card-text text-light">Phone:{{user.phone}}</h4>
+  <h4 class="card-text text-light">Last time online:{{user.last_login}}</h4>
+  <h4 class="card-text text-light">In our network since:{{user.date_joined}}</h4>
+  <h4 *ngIf="user.is_staff && !user.is_superuser" class="card-text text-light">Moderator</h4>
+  <h4 *ngIf="user.is_superuser" class="card-text text-light">Administrator</h4>
+  <h4 *ngIf="!user.is_staff && !user.is_superuser" class="card-text text-light">User</h4>
+
+
+<!--  <h4 class="card-text text-light">Website:{{user.website}}</h4>-->
+<!--  <ul class="card-text text-light" style="font-size: 32px; font-weight: bold">Company:-->
+<!--    <li><h4 class="card-text text-light">Company name:{{user.company_name}}</h4></li>-->
+<!--    <li><h4 class="card-text text-light">Catchphrase:{{user.company_catch_phrase}}</h4></li>-->
+<!--    <li><h4 class="card-text text-light">BS:{{user.company_bs}}</h4></li>-->
+<!--  </ul>-->
+</div>
+<h4 class="card-text text-light">Posts:</h4>
+<div class="list-group" *ngIf="posts">
+  <div *ngFor="let post of posts">
+    <a routerLink="" style="background-color: #302f33" (click)="toPost(post.id)" class="list-group-item list-group-item-action flex-column align-items-start active">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{post.title}}</h5>
+        <small>Author: {{user.username}}</small>
+      </div>
+      <p class="mb-1">{{post.body}}</p>
+      <small>Post ID:{{post.id}}</small>
+    </a>
+  </div>
+</div>
+
