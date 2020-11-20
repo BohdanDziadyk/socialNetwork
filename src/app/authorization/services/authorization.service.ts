@@ -4,6 +4,7 @@ import {Observable, pipe} from "rxjs";
 import {LogInPair} from "../models/LogInPair";
 import {TokensPair} from "../models/TokensPair";
 import {tap} from "rxjs/operators";
+import {RegisterModel} from "../models/RegisterModel";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,9 @@ export class AuthorizationService {
       .pipe(
         tap((tokens: TokensPair) => this.setTokens(tokens))
       );
+  }
+  register(user: RegisterModel): Observable<any>{
+    return this.httpClient.post<RegisterModel>(`${this.URL}auth/register/`, user);
   }
   refresh(): Observable<TokensPair>{
     return this.httpClient.post<TokensPair>(`${this.URL}auth/refresh/`, {refresh: this.getRefreshToken()})

@@ -4,6 +4,7 @@ import {LogInPair} from "../models/LogInPair";
 import {TokensPair} from "../models/TokensPair";
 import {AuthorizationService} from "../services/authorization.service";
 import {Router} from "@angular/router";
+import {query} from "@angular/animations";
 
 @Component({
   selector: 'app-log-in',
@@ -29,7 +30,7 @@ export class LogInComponent implements OnInit {
   logIn(form: FormGroup): void {
     this.authorizationService.logIn(form.getRawValue()).subscribe(() => {
       this.router.navigate(['users']);
-    }, error => this.error = error.error)
+    }, err => this.error = err.detail)
   }
 
 

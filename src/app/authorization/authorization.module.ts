@@ -13,7 +13,7 @@ import {ReactiveFormsModule} from "@angular/forms";
         //HttpClientModule,
         RouterModule.forChild([
             {path: 'login', component: LogInComponent},
-            {path: 'registration', component: RegisterComponent}
+            {path: 'register', component: RegisterComponent}
         ]),
         CommonModule,
         ReactiveFormsModule

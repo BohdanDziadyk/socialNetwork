@@ -17,7 +17,7 @@ import {PostComponent} from '../post/post/post.component';
     RouterModule.forChild([
       {path: '', component: AllUsersComponent, resolve: {fetchedUsers: UserResolveService}},
       {path: ':id', component: UserComponent},
-      {path: 'posts/:id', component: PostComponent}
+      {path: 'posts/:id', component: PostComponent},
     ])
   ]
 })

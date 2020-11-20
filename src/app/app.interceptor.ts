@@ -31,9 +31,17 @@ export class AppInterceptor implements HttpInterceptor {
           return this.handle401(request, next)
         }
       }
+      if(responseError.status === 400){
+        this.isRefreshing = false;
+        this.router.navigate(['auth/login'], {
+          queryParams:{
+            notAuthorized: true
+          }
+        })
+      }
       if(responseError.status === 403){
         this.isRefreshing = false;
-        this.router.navigate(['login'], {
+        this.router.navigate(['auth/login'], {
           queryParams:{
             sessionFailed: true
           }

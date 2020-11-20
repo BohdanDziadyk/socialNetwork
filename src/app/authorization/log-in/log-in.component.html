@@ -17,6 +17,6 @@
 <!--      <small style="color: white" *ngIf="form.hasError('passwordError')">Passwords don`t match</small>-->
     </div>
     <button [disabled]="form.invalid" type = submit (click)="logIn(form)">Log In</button>
-    <div *ngIf="error">{{error.errorDetail}}</div>
+    <small style="color: white" *ngIf="error">{{error}}</small>
   </form>
 </div>

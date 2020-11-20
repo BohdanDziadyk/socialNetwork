@@ -15,7 +15,7 @@ import {PostResolveService} from './services/post-resolve.service';
     //HttpClientModule,
     RouterModule.forChild([
       {path: '', component: AllPostsComponent, resolve: {fetchedPosts: PostResolveService}},
-      {path: 'posts/:id', component: PostComponent}
+      {path: ':id', component: PostComponent}
       ])
   ]
 })

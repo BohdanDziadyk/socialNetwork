@@ -20,7 +20,8 @@ import {AppInterceptor} from "./app.interceptor";
       {path: 'users', loadChildren : () => import('./user/user.module').then(m => m.UserModule)},
       {path: 'posts', loadChildren : () => import('./post/post.module').then(m => m.PostModule)},
       {path: 'comments', loadChildren : () => import('./comment/comment.module').then(m => m.CommentModule)},
-      {path: 'auth', loadChildren: () => import('./authorization/authorization.module').then(m => m.AuthorizationModule)}
+      {path: 'auth', loadChildren: () => import('./authorization/authorization.module').then(m => m.AuthorizationModule)},
+      {path: 'my_account', loadChildren:() => import('./user-account/user-account.module').then(m => m.UserAccountModule)}
     ])
   ],
   providers: [
