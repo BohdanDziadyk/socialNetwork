@@ -16,7 +16,7 @@ import {CommentResolveService} from './services/comment-resolve.service';
     //HttpClientModule,
     RouterModule.forChild([
       {path: '', component: AllCommentsComponent, resolve: {fetchedComments: CommentResolveService}},
-      {path: 'comments/:id', component: CommentComponent}
+      {path: ':id', component: CommentComponent}
     ])
   ]
 })

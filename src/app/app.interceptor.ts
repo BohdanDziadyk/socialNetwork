@@ -1,73 +1,54 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpInterceptor, HttpErrorResponse
 } from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
+import {catchError, switchMap} from 'rxjs/operators';
 import {AuthorizationService} from "./authorization/services/authorization.service";
-import {Router} from "@angular/router";
-import {catchError, filter, switchMap, take} from "rxjs/operators";
 import {TokensPair} from "./authorization/models/TokensPair";
+
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
-  private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  constructor(private authorizationService: AuthorizationService, private router: Router) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const isAuthorized = this.authorizationService.isAuthenticated();
-    if (this.isRefreshing){
-      request = this.addToken(request, this.authorizationService.getRefreshToken());
+  constructor(private authService: AuthorizationService, private router: Router) {
+  }
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const isAuthenticated = this.authService.isAuthenticated(); // определяем есть ли у нас access токен в localstorage
+    if (isAuthenticated) { // если есть то сетаем его в header
+      request = this.addToken(request, this.authService.getAccessToken());
     }
-    else if(isAuthorized){
-      request = this.addToken(request, this.authorizationService.getAccessToken());
-    }
-    return next.handle(request).pipe(catchError((responseError: HttpErrorResponse)=>{
-      if(responseError && responseError.error){
-        if (responseError instanceof HttpErrorResponse && responseError.status === 401){
-          return this.handle401(request, next)
+    return next.handle(request).pipe(catchError((res: HttpErrorResponse) => { // отсылаем реквест на сервер попутно отслеживаем ошибки
+      if (res && res.error) {
+        if (res instanceof HttpErrorResponse && res.status === 401) {
+          return this.handle401Error(request, next); // если 401 ошибка переходим в метод обработки ошибки
         }
+        console.log(res.error.detail);
       }
-      if(responseError.status === 400){
-        this.isRefreshing = false;
-        this.router.navigate(['auth/login'], {
-          queryParams:{
-            notAuthorized: true
+      if (res.status === 403) { // если 403 ошибка переходим на страницу логинации
+        this.router.navigate(['login'], {
+          queryParams: {
+            sessionFiled: true
           }
-        })
+        });
       }
-      if(responseError.status === 403){
-        this.isRefreshing = false;
-        this.router.navigate(['auth/login'], {
-          queryParams:{
-            sessionFailed: true
-          }
-        })
-      }
-    })) as any
+    })) as any;
   }
-  addToken(request: HttpRequest<any>, token:string): HttpRequest<any>{
-    return request.clone({setHeaders:{Authorization: `Bearer ${token}`}});
+
+  addToken(request: HttpRequest<any>, token: string): HttpRequest<any> { // метод для добавления в request header с токеном
+    return request.clone({setHeaders: {Authorization: `Bearer ${token}`}});
   }
-  private handle401(request: HttpRequest<any>, next: HttpHandler): any{
-    if (!this.isRefreshing){
-      this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
-      return this.authorizationService.refresh().pipe(
-        switchMap((token: TokensPair)=> {
-          this.isRefreshing = false;
-          this.refreshTokenSubject.next(token.access);
-          return next.handle(this.addToken(request, token.access));
-        })
-      )
-    }
-    return this.refreshTokenSubject.pipe(
-      filter(token => token != null),
-      take(1),
-      switchMap(jwt => next.handle(this.addToken(request, jwt)))
+
+  private handle401Error(request: HttpRequest<any>, next: HttpHandler): any { // метод для обработки 401 ошибки
+    return this.authService.refresh().pipe( // отсылаем запрос на бек на рефреш
+      switchMap((token: TokensPair) => {
+        return next.handle(this.addToken(request, token.access)); // передаем дальше реквест с новым accessToken
+      })
     );
   }
 }

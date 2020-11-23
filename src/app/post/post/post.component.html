@@ -5,6 +5,9 @@
   <p *ngIf="postUser"> Author:{{postUser.username}}</p>
 </div>
 <h4 class="card-text text-light">Comments:</h4>
+<div *ngIf="!comments" style="color: white; display: flex; justify-content: center; align-items: center; font-size: 44px">
+  THERE IS NOTHING TO SHOW HERE :(
+</div>
 <div class="list-group" *ngIf="comments">
   <div *ngFor="let comment of comments">
     <a routerLink="comment/{{comment.id}}" style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">

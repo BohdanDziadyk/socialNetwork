@@ -29,7 +29,7 @@ export class LogInComponent implements OnInit {
 
   logIn(form: FormGroup): void {
     this.authorizationService.logIn(form.getRawValue()).subscribe(() => {
-      this.router.navigate(['users']);
+      this.router.navigate(['my_account']);
     }, err => this.error = err.detail)
   }
 

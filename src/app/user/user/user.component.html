@@ -33,10 +33,13 @@
     <a routerLink="" style="background-color: #302f33" (click)="toPost(post.id)" class="list-group-item list-group-item-action flex-column align-items-start active">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">{{post.title}}</h5>
-        <small>Author: {{user.username}}</small>
+        <small *ngIf="user">Author: {{user.username}}</small>
       </div>
       <p class="mb-1">{{post.body}}</p>
       <small>Post ID:{{post.id}}</small>
     </a>
   </div>
 </div>
+<div *ngIf="!posts" style="display: flex; justify-content: center; align-items: center">
+<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>>
