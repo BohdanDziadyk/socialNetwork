@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Post} from '../models/Post';
+import {Comment} from "../../comment/models/Comment";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,10 @@ export class PostService {
 
   getPostsByUserId(id): Observable<Post[]> {
     return this.httpClient.get<Post[]>(`${this.URL}?user=${id}`);
+  }
+
+  doComment(comment: Comment): Observable<Comment>{
+    return this.httpClient.post<Comment>(`http://localhost:8000/user_account/comments`, comment)
   }
 }
 

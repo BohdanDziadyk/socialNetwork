@@ -27,6 +27,17 @@
 <!--    <li><h4 class="card-text text-light">BS:{{user.company_bs}}</h4></li>-->
 <!--  </ul>-->
 </div>
+<div class="form">
+  <form [formGroup]="form">
+    <div>
+    <input class="form-control" type="text" [formControl]="title" placeholder="Type title of your post..">
+    </div>
+    <div>
+    <textarea class="form-control" type="text" [formControl]="body" placeholder="Type your post here..."></textarea>
+    </div>
+    <button class="btn-primary" type="submit" (click)="doPost(form)">Add post</button>
+  </form>
+</div>
 <h4 class="card-text text-light">Posts:</h4>
 <div class="list-group" *ngIf="posts">
   <div *ngFor="let post of posts">

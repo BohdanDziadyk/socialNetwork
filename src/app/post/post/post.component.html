@@ -4,6 +4,13 @@
   <hr class="my-4">
   <p *ngIf="postUser"> Author:{{postUser.username}}</p>
 </div>
+<div>
+  <form [formGroup]="form">
+    <textarea class="form-control" [formControl]="body" placeholder="Comment this post..."></textarea>
+    <button class="btn-primary" type="submit" (click)="doComment(form)">Add comment</button>
+  </form>
+</div>
+<hr>
 <h4 class="card-text text-light">Comments:</h4>
 <div *ngIf="!comments" style="color: white; display: flex; justify-content: center; align-items: center; font-size: 44px">
   THERE IS NOTHING TO SHOW HERE :(

@@ -28,7 +28,7 @@ export class AppInterceptor implements HttpInterceptor {
         if (res instanceof HttpErrorResponse && res.status === 401) {
           return this.handle401Error(request, next); // если 401 ошибка переходим в метод обработки ошибки
         }
-        console.log(res.error.detail);
+        console.log(res.error);
       }
       if (res.status === 403) { // если 403 ошибка переходим на страницу логинации
         this.router.navigate(['login'], {

@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../user/services/user.service";
 import {PostService} from "../../post/services/post.service";
 import {UserAccountService} from "../services/user-account.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-user-account',
@@ -15,7 +16,18 @@ export class UserAccountComponent implements OnInit {
 posts: Post[];
   @Input()
   user: User;
+  form: FormGroup;
+  title: FormControl = new FormControl('')
+  body: FormControl = new FormControl('', [Validators.required])
   constructor(private activatedRoute: ActivatedRoute, private userAccountService: UserAccountService, private router:Router) {
+    this.form = new FormGroup({
+      title: this.title,
+      body: this.body
+    })
+  }
+  doPost(form: FormGroup): void{
+    this.userAccountService.doPost(form.getRawValue()).subscribe();
+    document.location.reload()
   }
   ngOnInit(): void {
       this.userAccountService.getCurrentUser().subscribe(value => this.user = value);

@@ -15,6 +15,9 @@ export class UserAccountService {
     return this.httpClient.get<User>(this.URL);
   }
   getCurrentUserPosts(): Observable<Post[]>{
-    return this.httpClient.get<Post[]>(`${this.URL}posts`)
+    return this.httpClient.get<Post[]>(`${this.URL}posts`);
+  }
+  doPost(post: Post): Observable<Post>{
+    return this.httpClient.post<Post>(`${this.URL}posts`, post);
   }
 }
