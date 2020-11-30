@@ -33,7 +33,7 @@ export class PostComponent implements OnInit {
   }
   doComment(form: FormGroup){
     this.postService.doComment({body: form.controls.body.value, post: this.post.id}).subscribe();
-    // document.location.reload()
+    document.location.reload()
   }
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(value => this.postService.getPost(value.id)

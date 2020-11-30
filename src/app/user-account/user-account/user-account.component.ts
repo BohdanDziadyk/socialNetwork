@@ -35,6 +35,6 @@ posts: Post[];
   }
 
   toPost(id: number) : void{
-    this.router.navigate([`posts/${id}`]);
+    this.router.navigate([`my_account/posts/${id}`]);
   }
 }

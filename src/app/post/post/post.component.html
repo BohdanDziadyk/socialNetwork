@@ -1,16 +1,15 @@
 <div class="jumbotron" *ngIf="post">
-  <h1 class="display-4">{{post.title}}</h1>
+  <h1 *ngIf="postUser">{{postUser.first_name}} {{postUser.last_name}}</h1>
+  <h2 class="display-4">{{post.title}}</h2>
   <p class="lead">{{post.body}}</p>
   <hr class="my-4">
-  <p *ngIf="postUser"> Author:{{postUser.username}}</p>
-</div>
-<div>
+  <div>
   <form [formGroup]="form">
     <textarea class="form-control" [formControl]="body" placeholder="Comment this post..."></textarea>
     <button class="btn-primary" type="submit" (click)="doComment(form)">Add comment</button>
   </form>
 </div>
-<hr>
+</div>
 <h4 class="card-text text-light">Comments:</h4>
 <div *ngIf="!comments" style="color: white; display: flex; justify-content: center; align-items: center; font-size: 44px">
   THERE IS NOTHING TO SHOW HERE :(

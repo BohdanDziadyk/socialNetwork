@@ -1,0 +1,9 @@
+.form{
+  display: flex;
+  flex-direction: column;
+}
+.special{
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}

@@ -31,7 +31,7 @@ export class AppInterceptor implements HttpInterceptor {
         console.log(res.error);
       }
       if (res.status === 403) { // если 403 ошибка переходим на страницу логинации
-        this.router.navigate(['login'], {
+        this.router.navigate(['auth/login'], {
           queryParams: {
             sessionFiled: true
           }
