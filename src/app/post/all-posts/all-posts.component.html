@@ -1,13 +1,17 @@
 <router-outlet></router-outlet>
+<div *ngIf="!posts" style="color: white; display: flex; justify-content: center; align-items: center; font-size: 44px">
+  THERE IS NOTHING TO SHOW HERE :(
+</div>
 <div class="list-group">
   <div *ngFor="let post of posts">
     <a routerLink="{{post.id}}" style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">{{post.title}}</h5>
-        <small>Author ID:{{post.userId}}</small>
+        <small>Author:{{post.user}}</small>
       </div>
       <p class="mb-1">{{post.body}}</p>
-      <small>Post ID:{{post.id}}</small>
+      <div><small>Posted:{{post.created_at}}</small></div>
+      <div><small>Last update:{{post.updated_at}}</small></div>
     </a>
   </div>
 </div>

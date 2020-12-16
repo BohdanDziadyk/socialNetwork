@@ -7,16 +7,20 @@ import {Comment} from '../models/Comment';
   providedIn: 'root'
 })
 export class CommentService {
-
+  URL = `http://localhost:8000/comments/`;
   constructor(private httpClient: HttpClient) {
   }
 
   getAllComments(): Observable<Comment[]> {
-    return this.httpClient.get<Comment[]>('https://jsonplaceholder.typicode.com/comments');
+    return this.httpClient.get<Comment[]>(this.URL);
   }
 
   getComment(id: number): Observable<Comment> {
-    return this.httpClient.get<Comment>(`https://jsonplaceholder.typicode.com/comments/${id}`);
+    return this.httpClient.get<Comment>(`${this.URL}${id}`);
+  }
+
+  getCommentByPostId(id): Observable<Comment[]> {
+    return this.httpClient.get<Comment[]>(`${this.URL}?post=${id}`);
   }
 }
 

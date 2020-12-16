@@ -4,6 +4,7 @@ import {UserService} from '../services/user.service';
 import {ActivatedRoute} from '@angular/router';
 import {PostService} from '../../post/services/post.service';
 import {Post} from '../../post/models/Post';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user',
@@ -14,10 +15,14 @@ export class UserComponent implements OnInit {
   posts: Post[];
   @Input()
   user: User;
-  constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private postService: PostService) {
+  constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private postService: PostService, private router:Router) {
   }
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(value => this.userService.getUser(+value.id).subscribe(value1 => this.user = value1));
     this.activatedRoute.params.subscribe(value => this.postService.getPostsByUserId(value.id).subscribe(value1 => this.posts = value1));
+  }
+
+  toPost(id: number) : void{
+    this.router.navigate([`posts/${id}`]);
   }
 }

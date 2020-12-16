@@ -1,6 +1,33 @@
-<div class="jumbotron">
-  <h1 class="display-4">{{post.title}}</h1>
+<div class="jumbotron" *ngIf="post">
+  <h1 *ngIf="postUser">{{postUser.first_name}} {{postUser.last_name}}</h1>
+  <h2 class="display-4">{{post.title}}</h2>
   <p class="lead">{{post.body}}</p>
   <hr class="my-4">
-  <p>Post ID:{{post.id}} Author ID:{{post.userId}}</p>
+  <div>
+  <form [formGroup]="form">
+    <textarea class="form-control" [formControl]="body" placeholder="Comment this post..."></textarea>
+    <button class="btn-primary" type="submit" (click)="doComment(form)">Add comment</button>
+  </form>
+</div>
+</div>
+<h4 class="card-text text-light">Comments:</h4>
+<div *ngIf="!comments" style="color: white; display: flex; justify-content: center; align-items: center; font-size: 44px">
+  THERE IS NOTHING TO SHOW HERE :(
+</div>
+<div class="list-group" *ngIf="comments">
+  <div *ngFor="let comment of comments">
+    <a routerLink="comment/{{comment.id}}" style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
+      <div class="d-flex w-100 justify-content-between">
+        <h6 class="mb-1">Author:{{comment.user}}</h6>
+        <small>Comment ID: {{comment.id}}</small>
+      </div>
+      <h5 class="mb-1">{{comment.body}}</h5>
+      <div>
+        <small>Posted:{{comment.created_at}}</small>
+      </div>
+      <div>
+        <small>Last update:{{comment.updated_at}}</small>
+      </div>
+    </a>
+  </div>
 </div>
