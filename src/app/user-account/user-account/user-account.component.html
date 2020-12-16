@@ -4,28 +4,12 @@
   <h3 class="card-title text-light">{{user.last_name}}</h3>
   <h4 class="card-text text-light">Nickname:{{user.username}}</h4>
   <h4 class="card-text text-light">Email address:{{user.email}}</h4>
-<!--  <ul class="card-text text-light" style="font-size: 32px;font-weight: bold">Address:-->
-<!--    <li><h4 class="card-text text-light">Suite:{{user.address_suite}}</h4></li>-->
-<!--    <li><h4 class="card-text text-light">City:{{user.address_street}}</h4></li>-->
-<!--    <li><h4 class="card-text text-light">Street:{{user.address_city}}</h4></li>-->
-<!--    <li><h4 class="card-text text-light">ZIP:{{user.address_zipcode}}</h4></li>-->
-<!--    <li><h4 class="card-text text-light">Latitude:{{user.address_geo_lat}}</h4></li>-->
-<!--    <li><h4 class="card-text text-light">Longitude:{{user.address_geo_lng}}</h4></li>-->
-<!--  </ul>-->
   <h4 class="card-text text-light">Phone:{{user.phone}}</h4>
   <h4 class="card-text text-light">Last time online:{{user.last_login}}</h4>
   <h4 class="card-text text-light">In our network since:{{user.date_joined}}</h4>
   <h4 *ngIf="user.is_staff && !user.is_superuser" class="card-text text-light">Moderator</h4>
   <h4 *ngIf="user.is_superuser" class="card-text text-light">Administrator</h4>
   <h4 *ngIf="!user.is_staff && !user.is_superuser" class="card-text text-light">User</h4>
-
-
-<!--  <h4 class="card-text text-light">Website:{{user.website}}</h4>-->
-<!--  <ul class="card-text text-light" style="font-size: 32px; font-weight: bold">Company:-->
-<!--    <li><h4 class="card-text text-light">Company name:{{user.company_name}}</h4></li>-->
-<!--    <li><h4 class="card-text text-light">Catchphrase:{{user.company_catch_phrase}}</h4></li>-->
-<!--    <li><h4 class="card-text text-light">BS:{{user.company_bs}}</h4></li>-->
-<!--  </ul>-->
 </div>
 <div class="form">
   <form [formGroup]="form">
@@ -35,7 +19,12 @@
     <div>
     <textarea class="form-control" type="text" [formControl]="body" placeholder="Type your post here..."></textarea>
     </div>
-    <button class="btn-primary" type="submit" (click)="doPost(form)">Add post</button>
+<!--    <div>-->
+<!--      <input style="color: white" type = file [formControl]="image">-->
+<!--    </div>-->
+    <div>
+      <button class="btn-primary" type="submit" (click)="doPost(form)">Add post</button>
+    </div>
   </form>
 </div>
 <h4 class="card-text text-light">Posts:</h4>
@@ -47,6 +36,7 @@
         <small >Posted: {{post.created_at}}</small>
       </div>
       <h6 class="mb-1">{{post.title}}</h6>
+      <img class="card-img" *ngIf="post.image" src="{{post.image}}">
       <p class="mb-1">{{post.body}}</p>
       <small>Post ID:{{post.id}}</small>
     </a>

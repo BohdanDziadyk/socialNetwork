@@ -19,13 +19,16 @@ posts: Post[];
   form: FormGroup;
   title: FormControl = new FormControl('')
   body: FormControl = new FormControl('', [Validators.required])
+  // image: FormControl = new FormControl('')
   constructor(private activatedRoute: ActivatedRoute, private userAccountService: UserAccountService, private router:Router) {
     this.form = new FormGroup({
       title: this.title,
-      body: this.body
+      body: this.body,
+      // image: this.image
     })
   }
   doPost(form: FormGroup): void{
+    console.log(form.getRawValue());
     this.userAccountService.doPost(form.getRawValue()).subscribe();
     document.location.reload()
   }

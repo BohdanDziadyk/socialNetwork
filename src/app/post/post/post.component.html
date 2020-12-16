@@ -18,11 +18,16 @@
   <div *ngFor="let comment of comments">
     <a routerLink="comment/{{comment.id}}" style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
       <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{comment.body}}</h5>
+        <h6 class="mb-1">Author:{{comment.user}}</h6>
         <small>Comment ID: {{comment.id}}</small>
       </div>
-      <small>Posted:{{comment.created_at}}</small>
-      <small>Last update:{{comment.updated_at}}</small>
+      <h5 class="mb-1">{{comment.body}}</h5>
+      <div>
+        <small>Posted:{{comment.created_at}}</small>
+      </div>
+      <div>
+        <small>Last update:{{comment.updated_at}}</small>
+      </div>
     </a>
   </div>
 </div>

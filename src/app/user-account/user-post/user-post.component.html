@@ -28,15 +28,6 @@
   </div>
 </div>
 <h4 class="card-text text-light">Comments:</h4>
-<div *ngIf="showCommentEditForm()">
-    <form [formGroup]="commentEditForm">
-      <div>
-        <textarea  class="form-control" [formControl]="editedCommentBody"  placeholder="Type your comment here..."></textarea>
-      </div>
-      <button type="submit" style="margin-right: 20px" class="btn-warning" (click)="editComment(commentEditForm)">Edit</button>
-      <button type="button" class="btn-info" (click)="showCommentEditForm()">Cancel</button>
-    </form>
-  </div>
 <div *ngIf="!comments" style="color: white; display: flex; justify-content: center; align-items: center; font-size: 44px">
   THERE IS NOTHING TO SHOW HERE :(
 </div>
