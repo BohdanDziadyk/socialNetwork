@@ -20,7 +20,7 @@ export class UserPostComponent implements OnInit {
   commentUser: User;
   post: Post;
   comments: Comment[];
-  commentId: number;
+  comment: Comment;
   editFlag = false;
   commentEditFlag = false;
   editForm: FormGroup;
@@ -53,12 +53,17 @@ export class UserPostComponent implements OnInit {
     document.location.reload()
   }
   showEditForm(): boolean{
-    this.editFlag = !this.editFlag;
     return this.editFlag;
   }
+  changeEditFlag():void{
+    this.editFlag = !this.editFlag;
+  }
   showCommentEditForm(): boolean{
-    this.commentEditFlag = !this.commentEditFlag;
     return this.commentEditFlag;
+  }
+  changeCommentEditFlag(comment):void{
+    this.comment = comment;
+    this.commentEditFlag = !this.commentEditFlag;
   }
   editPost(editForm: FormGroup, id){
    this.userAccountService.editPost(editForm.getRawValue(),id).subscribe()
@@ -69,9 +74,10 @@ export class UserPostComponent implements OnInit {
     this.router.navigate(['my_account'])
   }
   editComment(commentEditForm:FormGroup){
-    this.userAccountService.editComment({body: commentEditForm.controls.editedCommentBody.value, post: this.post.id}, this.commentId).subscribe()
+    this.userAccountService.editComment({body: commentEditForm.controls.editedCommentBody.value, post: this.post.id}, this.comment.id).subscribe()
     document.location.reload()
   }
+
   deleteComment(id){
     this.userAccountService.deleteComment(id).subscribe()
     document.location.reload()

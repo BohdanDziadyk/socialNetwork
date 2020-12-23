@@ -22,6 +22,7 @@ export class PostComponent implements OnInit {
   newComment: Comment;
   form: FormGroup;
   body: FormControl = new FormControl('', [Validators.required]);
+
   constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private postService: PostService,
               private commentService: CommentService) {
     this.activatedRoute.params.subscribe(value => this.postService.getPost(value.id).subscribe(value1 => this.post = value1));
@@ -31,10 +32,12 @@ export class PostComponent implements OnInit {
       body: this.body
     })
   }
-  doComment(form: FormGroup){
+
+  doComment(form: FormGroup) {
     this.postService.doComment({body: form.controls.body.value, post: this.post.id}).subscribe();
-    document.location.reload()
+    document.location.reload();
   }
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(value => this.postService.getPost(value.id)
       .subscribe(value1 => this.userService.getUser(value1.user).subscribe(value2 => this.postUser = value2)));

@@ -3,8 +3,8 @@
   <h3 class="display-4">{{post.title}}</h3>
   <p class="lead">{{post.body}}</p>
   <hr class="my-4">
-  <div *ngIf="showEditForm()" class="special">
-    <button style="margin-right: 20px" type="button" class="btn-warning" (click)="showEditForm()">Edit</button>
+  <div *ngIf="!showEditForm()" class="special">
+    <button style="margin-right: 20px" type="button" class="btn-warning" (click)="changeEditFlag()">Edit</button>
     <button type="button" class="btn-danger" (click)="deletePost(post.id)">Delete</button>
   </div>
   <div *ngIf="showEditForm()">
@@ -16,7 +16,7 @@
         <textarea  class="form-control" [formControl]="body"  placeholder="Type your post here..."></textarea>
       </div>
       <button type="submit" style="margin-right: 20px" class="btn-warning" (click)="editPost(editForm, post.id)">Edit</button>
-      <button type="button" class="btn-info" (click)="showEditForm()">Cancel</button>
+      <button type="button" class="btn-info" (click)="changeEditFlag()">Cancel</button>
     </form>
   </div>
   <hr class="my-4">
@@ -41,11 +41,21 @@
       <div><small>User ID: {{comment.user}}</small></div>
       <div><small>Posted:{{comment.created_at}}</small></div>
       <div><small>Last update:{{comment.updated_at}}</small></div>
-      <div *ngIf="showCommentEditForm() && post.user === comment.user" class="special">
-        <button style="margin-right: 20px" type="button" class="btn-warning" (click)="showCommentEditForm()">Edit</button>
+      <div *ngIf="!showCommentEditForm() && post.user === comment.user" class="special">
+        <button style="margin-right: 20px" type="button" class="btn-warning" (click)="changeCommentEditFlag(comment)">Edit</button>
         <button type="button" class="btn-danger" (click)="deleteComment(comment.id)">Delete</button>
       </div>
     </a>
   </div>
 </div>
-
+<div *ngIf="showCommentEditForm()">
+  <form [formGroup]="commentEditForm">
+    <div>
+      <textarea class="form-control" [formControl]="editedCommentBody" placeholder="Type your comment here"></textarea>
+    </div>
+    <div>
+      <button type="submit" style="margin-right: 20px" class="btn-warning" (click)="editComment(commentEditForm)">Edit</button>
+      <button type="button" class="btn-info" (click)="changeCommentEditFlag(comment)">Cancel</button>
+    </div>
+  </form>
+</div>
