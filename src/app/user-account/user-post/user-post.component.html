@@ -31,6 +31,17 @@
 <div *ngIf="!comments" style="color: white; display: flex; justify-content: center; align-items: center; font-size: 44px">
   THERE IS NOTHING TO SHOW HERE :(
 </div>
+<div *ngIf="showCommentEditForm()">
+  <form [formGroup]="commentEditForm">
+    <div>
+      <textarea class="form-control" [formControl]="editedCommentBody" placeholder="Type your comment here"></textarea>
+    </div>
+    <div>
+      <button type="submit" style="margin-right: 20px" class="btn-warning" (click)="editComment(commentEditForm)">Edit</button>
+      <button type="button" class="btn-info" (click)="changeCommentEditFlag(comment)">Cancel</button>
+    </div>
+  </form>
+</div>
 <div class="list-group" *ngIf="comments">
   <div *ngFor="let comment of comments">
     <a style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
@@ -47,15 +58,4 @@
       </div>
     </a>
   </div>
-</div>
-<div *ngIf="showCommentEditForm()">
-  <form [formGroup]="commentEditForm">
-    <div>
-      <textarea class="form-control" [formControl]="editedCommentBody" placeholder="Type your comment here"></textarea>
-    </div>
-    <div>
-      <button type="submit" style="margin-right: 20px" class="btn-warning" (click)="editComment(commentEditForm)">Edit</button>
-      <button type="button" class="btn-info" (click)="changeCommentEditFlag(comment)">Cancel</button>
-    </div>
-  </form>
 </div>

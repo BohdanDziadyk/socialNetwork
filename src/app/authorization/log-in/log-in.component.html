@@ -12,9 +12,6 @@
       <small style="color: white" *ngIf="form.controls.password.invalid">Password must be from 8 to 16 symbols</small>
     </div>
     <div>
-<!--      <label style="color: white">Password confirm*:</label>-->
-<!--      <input type = password [formControl]="confirmPassword" placeholder="Confirm your password">-->
-<!--      <small style="color: white" *ngIf="form.hasError('passwordError')">Passwords don`t match</small>-->
     </div>
     <button [disabled]="form.invalid" type = submit (click)="logIn(form)">Log In</button>
     <small style="color: white" *ngIf="error">{{error}}</small>
