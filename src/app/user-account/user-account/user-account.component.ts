@@ -19,16 +19,23 @@ posts: Post[];
   form: FormGroup;
   title: FormControl = new FormControl('')
   body: FormControl = new FormControl('', [Validators.required])
-  // image: FormControl = new FormControl('')
+  imageForm: FormGroup;
+  image: FormControl = new FormControl('');
+  fileData: File = null;
   constructor(private activatedRoute: ActivatedRoute, private userAccountService: UserAccountService, private router:Router) {
     this.form = new FormGroup({
       title: this.title,
       body: this.body,
-      // image: this.image
+    })
+    this.imageForm = new FormGroup({
+      image: this.image
     })
   }
+  onFileUpload(inputFile: any) {
+    this.fileData = inputFile.target.files[0];
+  }
   doPost(form: FormGroup): void{
-    console.log(form.getRawValue());
+    this.userAccountService.postImage(this.fileData).subscribe();
     this.userAccountService.doPost(form.getRawValue()).subscribe();
     document.location.reload()
   }
@@ -36,7 +43,6 @@ posts: Post[];
       this.userAccountService.getCurrentUser().subscribe(value => this.user = value);
       this.userAccountService.getCurrentUserPosts().subscribe(value => this.posts = value);
   }
-
   toPost(id: number) : void{
     this.router.navigate([`my_account/posts/${id}`]);
   }

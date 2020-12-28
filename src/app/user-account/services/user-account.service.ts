@@ -21,6 +21,11 @@ export class UserAccountService {
   doPost(post: Post): Observable<Post>{
     return this.httpClient.post<Post>(`${this.URL}posts`, post);
   }
+  postImage(fileData: File): Observable<any>{
+    let formData = new FormData();
+    formData.append('image', fileData, fileData.name);
+    return this.httpClient.post<any>(`${this.URL}posts`, formData);
+  }
   getUserPost(id): Observable<Post>{
     return this.httpClient.get<Post>(`${this.URL}posts/${id}`);
   }
