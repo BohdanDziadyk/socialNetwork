@@ -37,6 +37,7 @@
       </div>
       <h6 class="mb-1">{{post.title}}</h6>
       <p class="mb-1">{{post.body}}</p>
+      <img class="card-img" *ngIf="post.image" src="http://localhost:8000{{post.image}}">
       <small>Post ID:{{post.id}}</small>
     </a>
   </div>

@@ -18,25 +18,20 @@ export class UserAccountService {
   getCurrentUserPosts(): Observable<Post[]>{
     return this.httpClient.get<Post[]>(`${this.URL}posts`);
   }
-  doPost(post: Post): Observable<Post>{
-    return this.httpClient.post<Post>(`${this.URL}posts`, post);
-  }
-  postImage(fileData: File): Observable<any>{
-    let formData = new FormData();
-    formData.append('image', fileData, fileData.name);
+  doPost(formData): Observable<any>{
     return this.httpClient.post<any>(`${this.URL}posts`, formData);
   }
   getUserPost(id): Observable<Post>{
     return this.httpClient.get<Post>(`${this.URL}posts/${id}`);
   }
-  editPost(post: Post, id): Observable<Post>{
-    return this.httpClient.patch<Post>(`${this.URL}posts/${id}`, post);
+  editPost(formData, id): Observable<any>{
+    return this.httpClient.patch<any>(`${this.URL}posts/${id}`, formData);
   }
   deletePost(id): Observable<Post>{
     return this.httpClient.delete<Post>(`${this.URL}posts/${id}`);
   }
-  editComment(comment: Comment, id): Observable<Comment>{
-    return this.httpClient.patch<Comment>(`${this.URL}comments/${id}`, comment);
+  editComment(formData, id): Observable<any>{
+    return this.httpClient.patch<any>(`${this.URL}comments/${id}`, formData);
   }
   deleteComment(id): Observable<Comment>{
     return this.httpClient.delete<Comment>(`${this.URL}comments/${id}`);

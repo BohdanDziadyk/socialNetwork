@@ -12,7 +12,7 @@
   <h4 *ngIf="!user.is_staff && !user.is_superuser" class="card-text text-light">User</h4>
 </div>
 <div class="form">
-  <form [formGroup]="form">
+  <form [formGroup]="form" enctype="multipart/form-data">
     <div>
     <input class="form-control" type="text" [formControl]="title" placeholder="Type title of your post..">
     </div>
@@ -20,14 +20,10 @@
     <textarea class="form-control" type="text" [formControl]="body" placeholder="Type your post here..."></textarea>
     </div>
     <div>
-      <button class="btn-primary" type="submit" (click)="doPost(form)">Add post</button>
-    </div>
-  </form>
-</div>
-<div class="form">
-  <form [formGroup]="imageForm" enctype="multipart/form-data">
-    <div>
       <input style="color: white" type = file [formControl]="image" (change)="onFileUpload($event)">
+    </div>
+    <div>
+      <button class="btn-primary" [disabled]="!form.valid" type="submit" (click)="doPost(form)">Add post</button>
     </div>
   </form>
 </div>
@@ -40,8 +36,8 @@
         <small >Posted: {{post.created_at}}</small>
       </div>
       <h6 class="mb-1">{{post.title}}</h6>
-      <img class="card-img" *ngIf="post.image" src="http://localhost:8000{{post.image}}">
       <p class="mb-1">{{post.body}}</p>
+      <img class="card-img" *ngIf="post.image" src="http://localhost:8000{{post.image}}">
       <small>Post ID:{{post.id}}</small>
     </a>
   </div>

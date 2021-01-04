@@ -25,8 +25,8 @@ export class PostService {
     return this.httpClient.get<Post[]>(`${this.URL}?user=${id}`);
   }
 
-  doComment(comment: Comment): Observable<Comment>{
-    return this.httpClient.post<Comment>(`http://localhost:8000/user_account/comments`, comment)
+  doComment(formData): Observable<any>{
+    return this.httpClient.post<any>(`http://localhost:8000/user_account/comments`, formData)
   }
 }
 

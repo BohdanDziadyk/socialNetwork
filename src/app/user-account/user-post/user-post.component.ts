@@ -15,7 +15,7 @@ import {UserAccountService} from "../services/user-account.service";
   styleUrls: ['./user-post.component.css']
 })
 export class UserPostComponent implements OnInit {
-@Input()
+  @Input()
   postUser: User;
   commentUser: User;
   post: Post;
@@ -26,66 +26,113 @@ export class UserPostComponent implements OnInit {
   editForm: FormGroup;
   title: FormControl = new FormControl('')
   body: FormControl = new FormControl('', [Validators.required]);
-  form: FormGroup;
+  image: FormControl = new FormControl('')
+  commentForm: FormGroup;
   commentBody: FormControl = new FormControl('', [Validators.required]);
+  commentImage: FormControl = new FormControl('')
   commentEditForm: FormGroup;
   editedCommentBody: FormControl = new FormControl('', [Validators.required]);
+  editedCommentImage: FormControl = new FormControl('')
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private userService: UserService, private postService: PostService,
               private commentService: CommentService, private userAccountService: UserAccountService) {
     this.activatedRoute.params.subscribe(value => this.postService.getPost(value.id).subscribe(value1 => this.post = value1));
     this.activatedRoute.params.subscribe(value => this.commentService.getCommentByPostId(value.id)
       .subscribe(value1 => this.comments = value1));
-    this.form = new FormGroup({
-      commentBody: this.commentBody
+    this.commentForm = new FormGroup({
+      commentBody: this.commentBody,
+      commentImage: this.commentImage
     })
     this.editForm = new FormGroup({
-      title: this.title,
-      body: this.body
+        title: this.title,
+        body: this.body,
+        image: this.image
       }
     )
     this.commentEditForm = new FormGroup({
-      editedCommentBody: this.editedCommentBody
+        editedCommentBody: this.editedCommentBody,
+        editedCommentImage: this.editedCommentImage
       }
     )
   }
-  doComment(form: FormGroup){
-    this.postService.doComment({body: form.controls.commentBody.value, post: this.post.id}).subscribe();
-    document.location.reload()
-  }
-  showEditForm(): boolean{
-    return this.editFlag;
-  }
-  changeEditFlag():void{
-    this.editFlag = !this.editFlag;
-  }
-  showCommentEditForm(): boolean{
-    return this.commentEditFlag;
-  }
-  changeCommentEditFlag(comment):void{
-    this.comment = comment;
-    this.commentEditFlag = !this.commentEditFlag;
-  }
-  editPost(editForm: FormGroup, id){
-   this.userAccountService.editPost(editForm.getRawValue(),id).subscribe()
-   document.location.reload()
-  }
-  deletePost(id){
-    this.userAccountService.deletePost(id).subscribe()
-    this.router.navigate(['my_account'])
-  }
-  editComment(commentEditForm:FormGroup){
-    this.userAccountService.editComment({body: commentEditForm.controls.editedCommentBody.value, post: this.post.id}, this.comment.id).subscribe()
+
+  doComment(commentForm: FormGroup) {
+    const formData = new FormData();
+    formData.set('image', commentForm.get('commentImage').value);
+    formData.set('post', `${this.post.id}`);
+    formData.set('body', commentForm.controls.commentBody.value);
+    console.log(formData);
+    this.postService.doComment(formData).subscribe(value => console.log(value));
     document.location.reload()
   }
 
-  deleteComment(id){
+  showEditForm(): boolean {
+    return this.editFlag;
+  }
+
+  changeEditFlag(): void {
+    this.editFlag = !this.editFlag;
+  }
+
+  showCommentEditForm(): boolean {
+    return this.commentEditFlag;
+  }
+
+  changeCommentEditFlag(comment): void {
+    this.comment = comment;
+    this.commentEditFlag = !this.commentEditFlag;
+  }
+
+  editPost(editForm: FormGroup, id) {
+    const formData = new FormData();
+    Object.entries(editForm.value).forEach(([key, value]: any[]) => {
+      if (key === 'image') {
+        formData.set(key, editForm.get(key).value)
+      } else {
+        formData.set(key, value)
+      }
+    })
+    this.userAccountService.editPost(formData, id).subscribe(value => console.log(value))
+    document.location.reload()
+  }
+  onFileUpload(event: any) {
+    const [file] = event.target.files;
+    this.editForm.patchValue({image: file})
+  }
+
+  deletePost(id) {
+    this.userAccountService.deletePost(id).subscribe()
+    this.router.navigate(['my_account'])
+    document.location.reload();
+  }
+
+  editComment(commentEditForm: FormGroup) {
+    const formData = new FormData();
+    formData.set('image', commentEditForm.get('editedCommentImage').value);
+    formData.set('post', `${this.post.id}`);
+    formData.set('body', commentEditForm.controls.editedCommentBody.value);
+    console.log(formData);
+    this.userAccountService.editComment(formData,this.comment.id).subscribe(value => console.log(value))
+    document.location.reload()
+  }
+
+  deleteComment(id) {
     this.userAccountService.deleteComment(id).subscribe()
     document.location.reload()
   }
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(value => this.userAccountService.getUserPost(value.id)
       .subscribe(value1 => this.userService.getUser(value1.user).subscribe(value2 => this.postUser = value2)));
     this.activatedRoute.params.subscribe(value => this.commentService.getComment(value.id)
       .subscribe(value1 => this.userService.getUser(value1.user).subscribe(value2 => this.commentUser = value2)));
+  }
+
+  onCommentFileUpload(event: any) {
+    const [file] = event.target.files;
+    this.commentForm.patchValue({commentImage: file})
+  }
+  onEditCommentFileUpload(event: any){
+    const [file] = event.target.files;
+    this.commentEditForm.patchValue({editedCommentImage: file})
   }
 }

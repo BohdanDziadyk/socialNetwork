@@ -2,8 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Post} from "../../post/models/Post";
 import {User} from "../../user/models/User";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../user/services/user.service";
-import {PostService} from "../../post/services/post.service";
 import {UserAccountService} from "../services/user-account.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
@@ -19,25 +17,30 @@ posts: Post[];
   form: FormGroup;
   title: FormControl = new FormControl('')
   body: FormControl = new FormControl('', [Validators.required])
-  imageForm: FormGroup;
   image: FormControl = new FormControl('');
-  fileData: File = null;
   constructor(private activatedRoute: ActivatedRoute, private userAccountService: UserAccountService, private router:Router) {
     this.form = new FormGroup({
       title: this.title,
       body: this.body,
-    })
-    this.imageForm = new FormGroup({
       image: this.image
     })
   }
-  onFileUpload(inputFile: any) {
-    this.fileData = inputFile.target.files[0];
+  onFileUpload(event: any) {
+    const[file] = event.target.files;
+    this.form.patchValue({image:file})
   }
   doPost(form: FormGroup): void{
-    this.userAccountService.postImage(this.fileData).subscribe();
-    this.userAccountService.doPost(form.getRawValue()).subscribe();
-    document.location.reload()
+    const formData = new FormData();
+    Object.entries(form.value).forEach(([key,value]: any[])=> {
+      if(key === 'image'){
+        formData.set(key, form.get(key).value)
+      }
+      else {
+        formData.set(key,value)
+      }
+    })
+    this.userAccountService.doPost(formData).subscribe(value => console.log(value));
+    document.location.reload();
   }
   ngOnInit(): void {
       this.userAccountService.getCurrentUser().subscribe(value => this.user = value);
