@@ -2,6 +2,10 @@
   width: 20rem;
   height: 20rem;
 }
+.post-image{
+  width: 50%;
+  height: 50%;
+}
 .lds-roller {
   display: inline-block;
   position: relative;

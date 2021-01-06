@@ -7,3 +7,11 @@
   justify-content: right;
   align-items: center;
 }
+.post-image{
+  width: 50%;
+  height: 50%;
+}
+.comment-image{
+  width: 25%;
+  height: 25%;
+}

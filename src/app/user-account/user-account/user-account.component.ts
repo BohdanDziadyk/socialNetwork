@@ -39,8 +39,8 @@ posts: Post[];
         formData.set(key,value)
       }
     })
-    this.userAccountService.doPost(formData).subscribe(value => console.log(value));
-    document.location.reload();
+    form.reset()
+    this.userAccountService.doPost(formData).subscribe(value=> this.ngOnInit());
   }
   ngOnInit(): void {
       this.userAccountService.getCurrentUser().subscribe(value => this.user = value);

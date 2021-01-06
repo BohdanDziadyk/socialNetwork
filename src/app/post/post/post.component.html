@@ -2,11 +2,14 @@
   <h1 *ngIf="postUser">{{postUser.first_name}} {{postUser.last_name}}</h1>
   <h2 class="display-4">{{post.title}}</h2>
   <p class="lead">{{post.body}}</p>
-  <img class="card-img" *ngIf="post.image" src="{{post.image}}">
+  <img class="post-image" *ngIf="post.image" src="{{post.image}}">
   <hr class="my-4">
   <div>
   <form [formGroup]="form">
     <textarea class="form-control" [formControl]="body" placeholder="Comment this post..."></textarea>
+    <div>
+        <input style="color: black" type = file [formControl]="image" (change)="onCommentFileUpload($event)">
+    </div>
     <button class="btn-primary" type="submit" (click)="doComment(form)">Add comment</button>
   </form>
 </div>
@@ -21,6 +24,9 @@
       <textarea class="form-control" [formControl]="editedCommentBody" placeholder="Type your comment here"></textarea>
     </div>
     <div>
+        <input style="color: white" type = file [formControl]="editedCommentImage" (change)="onEditCommentFileUpload($event)">
+    </div>
+    <div>
       <button type="submit" style="margin-right: 20px" class="btn-warning" (click)="editComment(commentEditForm)">Edit</button>
       <button type="button" class="btn-info" (click)="changeCommentEditFlag(comment)">Cancel</button>
     </div>
@@ -28,12 +34,13 @@
 </div>
 <div class="list-group" *ngIf="comments">
   <div *ngFor="let comment of comments">
-    <a routerLink="comment/{{comment.id}}" style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
+    <a style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
       <div class="d-flex w-100 justify-content-between">
         <h6 class="mb-1">Author:{{comment.user}}</h6>
         <small>Comment ID: {{comment.id}}</small>
       </div>
       <h5 class="mb-1">{{comment.body}}</h5>
+      <img class="comment-image" *ngIf="comment.image" src="{{comment.image}}">
       <div><small>Posted:{{comment.created_at}}</small></div>
       <div><small>Last update:{{comment.updated_at}}</small></div>
       <div *ngIf="!showCommentEditForm() && commentUser.id === comment.user" class="special">

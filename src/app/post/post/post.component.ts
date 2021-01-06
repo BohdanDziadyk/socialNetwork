@@ -24,26 +24,29 @@ export class PostComponent implements OnInit {
   comment: Comment;
   form: FormGroup;
   body: FormControl = new FormControl('', [Validators.required]);
+  image: FormControl = new FormControl('');
   commentEditForm: FormGroup;
   editedCommentBody: FormControl = new FormControl('', [Validators.required]);
-
+  editedCommentImage: FormControl = new FormControl('')
   constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private postService: PostService,
               private commentService: CommentService, private userAccountService: UserAccountService) {
-    this.activatedRoute.params.subscribe(value => this.postService.getPost(value.id).subscribe(value1 => this.post = value1));
-    this.activatedRoute.params.subscribe(value => this.commentService.getCommentByPostId(value.id)
-      .subscribe(value1 => this.comments = value1));
     this.form = new FormGroup({
-      body: this.body
+      body: this.body,
+      image: this.image
     })
     this.commentEditForm = new FormGroup({
-      editedCommentBody: this.editedCommentBody
+      editedCommentBody: this.editedCommentBody,
+      editedCommentImage: this.editedCommentImage
       }
     )
   }
-
   doComment(form: FormGroup) {
-    this.postService.doComment({body: form.controls.body.value, post: this.post.id}).subscribe();
-    document.location.reload();
+    const formData = new FormData();
+    formData.set('image', form.get('image').value);
+    formData.set('post', `${this.post.id}`);
+    formData.set('body', form.controls.body.value);
+    form.reset()
+    this.postService.doComment(formData).subscribe(value => this.ngOnInit());
   }
   showCommentEditForm(): boolean{
     return this.commentEditFlag;
@@ -53,8 +56,12 @@ export class PostComponent implements OnInit {
     this.commentEditFlag = !this.commentEditFlag;
   }
   editComment(commentEditForm:FormGroup){
-    this.userAccountService.editComment({body: commentEditForm.controls.editedCommentBody.value, post: this.post.id}, this.comment.id).subscribe()
-    document.location.reload()
+    const formData = new FormData();
+    formData.set('image', commentEditForm.get('editedCommentImage').value);
+    formData.set('post', `${this.post.id}`);
+    formData.set('body', commentEditForm.controls.editedCommentBody.value);
+    commentEditForm.reset()
+    this.userAccountService.editComment(formData,this.comment.id).subscribe(value => this.ngOnInit())
   }
 
   deleteComment(id){
@@ -62,10 +69,24 @@ export class PostComponent implements OnInit {
     document.location.reload()
   }
 
+  onCommentFileUpload(event: any) {
+    const [file] = event.target.files;
+    this.form.patchValue({image: file})
+  }
+
+  onEditCommentFileUpload(event: any){
+    const [file] = event.target.files;
+    this.commentEditForm.patchValue({editedCommentImage: file})
+  }
+
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(value => this.postService.getPost(value.id).subscribe(value1 => this.post = value1));
+    this.activatedRoute.params.subscribe(value => this.commentService.getCommentByPostId(value.id)
+      .subscribe(value1 => this.comments = value1));
     this.activatedRoute.params.subscribe(value => this.postService.getPost(value.id)
       .subscribe(value1 => this.userService.getUser(value1.user).subscribe(value2 => this.postUser = value2)));
     this.userAccountService.getCurrentUser().subscribe(value => this.commentUser = value);
+    this.commentEditFlag = false;
   }
 
 }
