@@ -36,5 +36,11 @@ export class UserAccountService {
   deleteComment(id): Observable<Comment>{
     return this.httpClient.delete<Comment>(`${this.URL}comments/${id}`);
   }
+  getUserFriends(): Observable<User[]>{
+    return this.httpClient.get<User[]>(`${this.URL}friends`);
+  }
+  sendFriendRequest(id, body): Observable<any>{
+    return this.httpClient.post<any>(`${this.URL}friends/send_friend_request/${id}`, body)
+  }
 }
 

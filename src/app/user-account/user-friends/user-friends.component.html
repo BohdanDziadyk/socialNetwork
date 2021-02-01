@@ -1,0 +1,12 @@
+<div>
+  <div class="card" style="width: 18rem; float: left; margin-left: 1.3rem; margin-bottom: 1rem; border: silver 1px solid; background-color: #302f33" *ngFor="let friend of friends">
+    <img class="card-img-top" src="https://lofrev.net/wp-content/photos/2017/05/user_logo.png" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title text-light">{{friend.first_name}}</h5>
+      <h5 class="card-title text-light">{{friend.last_name}}</h5>
+      <p class="card-text text-light">{{friend.email}}</p>
+      <p class="card-text text-light">{{friend.username}}</p>
+      <button class="btn btn-primary" (click)="toFriend(friend.id)">Show details</button>
+    </div>
+  </div>
+</div>
