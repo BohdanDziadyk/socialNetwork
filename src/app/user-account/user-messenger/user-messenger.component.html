@@ -1,0 +1,18 @@
+<h4 class="card-text text-light">Chat:</h4>
+<div class="list-group" *ngIf="messages">
+  <div *ngFor="let message of messages">
+    <a style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{message.sender_name}}</h5>
+        <small >Sended: {{message.created_at}}</small>
+      </div>
+      <h6 class="mb-1">{{message.body}}</h6>
+      <div>
+        <img class="post-image" *ngIf="message.image" src="http://localhost:8000{{message.image}}">
+      </div>
+      <small>Message ID:{{message.id}}</small>
+    </a>
+  </div>
+</div>
+
+

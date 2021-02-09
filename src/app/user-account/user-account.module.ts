@@ -7,11 +7,12 @@ import { UserCommentsComponent } from './user-comments/user-comments.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { UserPostComponent } from './user-post/user-post.component';
 import { UserFriendsComponent } from './user-friends/user-friends.component';
+import { UserMessengerComponent } from './user-messenger/user-messenger.component';
 
 
 
 @NgModule({
-  declarations: [UserAccountComponent, UserPostsComponent, UserCommentsComponent, UserPostComponent, UserFriendsComponent],
+  declarations: [UserAccountComponent, UserPostsComponent, UserCommentsComponent, UserPostComponent, UserFriendsComponent, UserMessengerComponent],
     imports: [
         CommonModule,
         RouterModule.forChild([
@@ -19,7 +20,8 @@ import { UserFriendsComponent } from './user-friends/user-friends.component';
             {path: 'posts', component: UserPostsComponent},
             {path: "posts/:id", component:UserPostComponent},
             {path: 'comments', component: UserCommentsComponent},
-            {path: 'friends', component: UserFriendsComponent}
+            {path: 'friends', component: UserFriendsComponent},
+            {path: 'messenger', component: UserMessengerComponent}
         ]),
         ReactiveFormsModule
     ]
