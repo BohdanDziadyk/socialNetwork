@@ -17,11 +17,16 @@ export class UserComponent implements OnInit {
   posts: Post[];
   @Input()
   user: User;
+  friendRequestResponse: string;
+  friends: User[];
+  isFriend: boolean;
   constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private postService: PostService, private router:Router, private authorizationService: AuthorizationService, private userAccountService: UserAccountService) {
   }
   ngOnInit(): void {
+    this.friendRequestResponse = null;
     this.activatedRoute.params.subscribe(value => this.userService.getUser(+value.id).subscribe(value1 => this.user = value1));
     this.activatedRoute.params.subscribe(value => this.postService.getPostsByUserId(value.id).subscribe(value1 => this.posts = value1));
+    this.userAccountService.getUserFriends().subscribe(value => this.activatedRoute.params.subscribe(value1 => this.isFriend = value.some(value2 => value1.id == value2.id)));
   }
   isAuthorized(): boolean {
     return this.authorizationService.isAuthenticated()
@@ -31,6 +36,11 @@ export class UserComponent implements OnInit {
   }
 
   sendFriendRequest(id) {
-    this.userAccountService.sendFriendRequest(id,this.user).subscribe(value => console.log(value));
+    this.userAccountService.sendFriendRequest(id,this.user).subscribe(value => this.friendRequestResponse = value);
+  }
+
+  deleteFriend(id) {
+    console.log(id);
+    this.userAccountService.deleteFriend(id, status).subscribe(value => this.ngOnInit())
   }
 }

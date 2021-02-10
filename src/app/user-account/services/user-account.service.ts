@@ -4,7 +4,6 @@ import {Observable} from "rxjs";
 import {User} from "../../user/models/User";
 import {Post} from "../../post/models/Post";
 import {Comment} from "../../comment/models/Comment";
-import {Message} from "../models/Message";
 
 @Injectable({
   providedIn: 'root'
@@ -41,13 +40,7 @@ export class UserAccountService {
     return this.httpClient.get<User[]>(`${this.URL}friends`);
   }
   sendFriendRequest(id, body): Observable<any>{
-    return this.httpClient.post<any>(`${this.URL}friends/send_friend_request/${id}`, body);
-  }
-  getUserMessages(): Observable<Message[]>{
-    return this.httpClient.get<Message[]>(`${this.URL}messages`);
-  }
-  sendMessage(formData): Observable<any>{
-    return this.httpClient.post<any>(`${this.URL}messages`, formData)
+    return this.httpClient.post<any>(`${this.URL}friends/send_friend_request/${id}`, body)
   }
 }
 
