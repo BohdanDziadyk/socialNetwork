@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {User} from "../../user/models/User";
 import {Post} from "../../post/models/Post";
 import {Comment} from "../../comment/models/Comment";
+import {FriendRequest} from "../models/FriendRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +40,20 @@ export class UserAccountService {
   getUserFriends(): Observable<User[]>{
     return this.httpClient.get<User[]>(`${this.URL}friends`);
   }
+  getUserFriendRequests(): Observable<FriendRequest[]>{
+    return this.httpClient.get<FriendRequest[]>(`${this.URL}friends/requests`)
+  }
   sendFriendRequest(id, body): Observable<any>{
     return this.httpClient.post<any>(`${this.URL}friends/send_friend_request/${id}`, body)
+  }
+  acceptFriendRequest(id, body): Observable<any>{
+    return this.httpClient.post<any>(`${this.URL}friends/accept_friend_request/${id}`, body)
+  }
+  declineFriendRequest(id, body): Observable<any>{
+    return this.httpClient.post<any>(`${this.URL}friends/decline_friend_request/${id}`, body)
+  }
+  deleteFriend(id, body): Observable<any>{
+    return this.httpClient.post<any>(`${this.URL}friends/delete/${id}`, body)
   }
 }
 

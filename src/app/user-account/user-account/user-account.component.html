@@ -1,15 +1,14 @@
-<div style="float: left" *ngIf="user">
-  <img class="avatar" src="https://lofrev.net/wp-content/photos/2017/05/user_logo.png">
-  <h3 class="card-title text-light">{{user.first_name}}</h3>
-  <h3 class="card-title text-light">{{user.last_name}}</h3>
+<div style="float: left; width: 30%; display: flex; flex-direction: column; padding-left: 3.5%" *ngIf="user">
+  <img class="avatar" src="https://picsum.photos/id/{{user.id}}/200/300" alt="Card image cap">
+  <h3 class="card-title text-light list-group-item active">{{user.first_name}} {{user.last_name}}</h3>
   <h4 class="card-text text-light">Nickname:{{user.username}}</h4>
-  <h4 class="card-text text-light">Email address:{{user.email}}</h4>
+  <h4 class="card-text text-light list-group-item active">Email address:{{user.email}}</h4>
   <h4 class="card-text text-light">Phone:{{user.phone}}</h4>
-  <h4 class="card-text text-light">Last time online:{{user.last_login}}</h4>
-  <h4 class="card-text text-light">In our network since:{{user.date_joined}}</h4>
-  <h4 *ngIf="user.is_staff && !user.is_superuser" class="card-text text-light">Moderator</h4>
-  <h4 *ngIf="user.is_superuser" class="card-text text-light">Administrator</h4>
-  <h4 *ngIf="!user.is_staff && !user.is_superuser" class="card-text text-light">User</h4>
+  <h4 class="card-text text-light list-group-item active" >Last time online:{{user.last_login}}</h4>
+  <h4 class="card-text text-light ">In our network since:{{user.date_joined}}</h4>
+  <h4 *ngIf="user.is_staff && !user.is_superuser" class="card-text text-light list-group-item active">Moderator</h4>
+  <h4 *ngIf="user.is_superuser" class="card-text text-light list-group-item active">Administrator</h4>
+  <h4 *ngIf="!user.is_staff && !user.is_superuser" class="card-text text-light list-group-item active">User</h4>
 </div>
 <div class="form">
   <form [formGroup]="form" enctype="multipart/form-data">

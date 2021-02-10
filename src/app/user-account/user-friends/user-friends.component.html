@@ -1,12 +1,38 @@
 <div>
-  <div class="card" style="width: 18rem; float: left; margin-left: 1.3rem; margin-bottom: 1rem; border: silver 1px solid; background-color: #302f33" *ngFor="let friend of friends">
-    <img class="card-img-top" src="https://lofrev.net/wp-content/photos/2017/05/user_logo.png" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title text-light">{{friend.first_name}}</h5>
-      <h5 class="card-title text-light">{{friend.last_name}}</h5>
-      <p class="card-text text-light">{{friend.email}}</p>
-      <p class="card-text text-light">{{friend.username}}</p>
-      <button class="btn btn-primary" (click)="toFriend(friend.id)">Show details</button>
+  <h4 class="card-text text-light">Friend Requests:</h4>
+  <div *ngIf="friendRequests">
+    <div class="list-group">
+      <div *ngFor="let friendRequest of friendRequests">
+        <a style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{friendRequest.sender_name}}</h5>
+            <small >Sender ID: {{friendRequest.from_user}}</small>
+          </div>
+          <h6 class="mb-1">is sending you a friend request.</h6>
+          <p class="mb-1">Please be careful and do not accept friend requests from strange or unknown accounts.</p>
+          <small>Request ID:{{friendRequest.id}}</small>
+          <button type="submit" class="btn-warning" (click)="acceptFriendRequest(friendRequest.id)">Accept</button>
+          <button type="submit" class="btn-danger"  (click)="declineFriendRequest(friendRequest.id)">Decline</button>
+        </a>
+      </div>
     </div>
   </div>
+  <div *ngIf="!friendRequests" class="text-lg-center text-white">You have no friend requests here, tell people more about yourself :(</div>
 </div>
+<div>
+  <h4 class="card-text text-light">Friends:</h4>
+  <div *ngIf="friends">
+    <div class="card" style="width: 18rem; float: left; margin-left: 1.3rem; margin-bottom: 1rem; border: silver 1px solid; background-color: #302f33" *ngFor="let friend of friends">
+      <img class="card-img-top" src="https://picsum.photos/id/{{friend.id}}/200/300" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title text-light">{{friend.first_name}}</h5>
+        <h5 class="card-title text-light">{{friend.last_name}}</h5>
+        <p class="card-text text-light">{{friend.email}}</p>
+        <p class="card-text text-light">{{friend.username}}</p>
+        <button class="btn btn-primary" (click)="toFriend(friend.id)">Show details</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!friends" class="text-lg-center text-white">You have no friends here, try to find somebody in "Users" tab :(</div>
+</div>
+
