@@ -1,7 +1,7 @@
 export interface Message {
   id?: number;
-  sender_id?: number;
-  receiver_id?: number;
+  sender?: number;
+  receiver?: number;
   sender_name: string;
   body: number;
   image?: any;
