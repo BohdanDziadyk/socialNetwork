@@ -17,7 +17,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!friendRequests" class="text-lg-center text-white">You have no friend requests here, tell people more about yourself :(</div>
+  <div *ngIf="friendRequests.length===0" class="text-lg-center text-white">You have no friend requests here, tell people more about yourself :(</div>
 </div>
 <div>
   <h4 class="card-text text-light">Friends:</h4>
@@ -33,6 +33,6 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!friends" class="text-lg-center text-white">You have no friends here, try to find somebody in "Users" tab :(</div>
+  <div *ngIf="friends.length===0" class="text-lg-center text-white">You have no friends here, try to find somebody in "Users" tab :(</div>
 </div>
 

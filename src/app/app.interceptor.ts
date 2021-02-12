@@ -31,11 +31,15 @@ export class AppInterceptor implements HttpInterceptor {
         console.log(res.error);
       }
       if (res.status === 403) { // если 403 ошибка переходим на страницу логинации
+        alert("403")
         this.router.navigate(['auth/login'], {
           queryParams: {
-            sessionFiled: true
+            sessionFailed: true
           }
         });
+      }
+      if (res.status === 400) { // если 403 ошибка переходим на страницу логинации
+        alert("400")
       }
     })) as any;
   }
