@@ -1,34 +1,42 @@
-<div style="float: left; width: 30%; display: flex; flex-direction: column; padding-left: 3.5%" *ngIf="user">
-  <img class="avatar" src="https://picsum.photos/id/{{user.id}}/200/300" alt="Card image cap">
-  <h3 class="card-title text-light list-group-item active">{{user.first_name}} {{user.last_name}}</h3>
-  <h4 class="card-text text-light">Nickname:{{user.username}}</h4>
-  <h4 class="card-text text-light list-group-item active">Email address:{{user.email}}</h4>
-  <h4 class="card-text text-light">Phone:{{user.phone}}</h4>
-  <h4 class="card-text text-light list-group-item active" >Last time online:{{user.last_login}}</h4>
-  <h4 class="card-text text-light ">In our network since:{{user.date_joined}}</h4>
-  <h4 *ngIf="user.is_staff && !user.is_superuser" class="card-text text-light list-group-item active">Moderator</h4>
-  <h4 *ngIf="user.is_superuser" class="card-text text-light list-group-item active">Administrator</h4>
-  <h4 *ngIf="!user.is_staff && !user.is_superuser" class="card-text text-light list-group-item active">User</h4>
-  <button class="btn-danger" *ngIf="isFriend" (click)="deleteFriend(user.id)">Delete friend</button>
-  <button class="btn-primary" *ngIf="!isFriend" (click)="sendFriendRequest(user.id)">{{ this.friendRequestResponse ? this.friendRequestResponse : 'Send friend request'}}</button>
+<div *ngIf="!user" style="display: flex; justify-content: center; align-items: center">
+  <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </div>
-<h4 class="card-text text-light">Posts:</h4>
-<div class="list-group" *ngIf="posts">
-  <div *ngFor="let post of posts">
-    <a routerLink="" style="background-color: #302f33" (click)="toPost(post.id)" class="list-group-item list-group-item-action flex-column align-items-start active">
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{user.first_name}} {{user.last_name}}</h5>
-        <small >Posted: {{post.created_at}}</small>
-      </div>
-      <h6 class="mb-1">{{post.title}}</h6>
-      <p class="mb-1">{{post.body}}</p>
-      <div>
-         <img class="post-image" *ngIf="post.image" src="http://localhost:8000{{post.image}}">
-      </div>
-      <small>Post ID:{{post.id}}</small>
-    </a>
+<div *ngIf="user">
+  <div style="float: left; width: 30%; display: flex; flex-direction: column; padding-left: 3.5%">
+    <img class="avatar" src="https://picsum.photos/id/{{user.id}}/200/300" alt="Card image cap">
+    <h3 class="card-title text-light list-group-item active">{{user.first_name}} {{user.last_name}}</h3>
+    <h4 class="card-text text-light">Nickname:{{user.username}}</h4>
+    <h4 class="card-text text-light list-group-item active">Email address:{{user.email}}</h4>
+    <h4 class="card-text text-light">Phone:{{user.phone}}</h4>
+    <h4 class="card-text text-light list-group-item active" >Last time online:{{user.last_login}}</h4>
+    <h4 class="card-text text-light ">In our network since:{{user.date_joined}}</h4>
+    <h4 *ngIf="user.is_staff && !user.is_superuser" class="card-text text-light list-group-item active">Moderator</h4>
+    <h4 *ngIf="user.is_superuser" class="card-text text-light list-group-item active">Administrator</h4>
+    <h4 *ngIf="!user.is_staff && !user.is_superuser" class="card-text text-light list-group-item active">User</h4>
+    <button class="btn-danger" *ngIf="isFriend" (click)="deleteFriend(user.id)">Delete friend</button>
+    <button class="btn-primary" *ngIf="!isFriend" (click)="sendFriendRequest(user.id)">{{ this.friendRequestResponse ? this.friendRequestResponse : 'Send friend request'}}</button>
+  </div>
+  <h4 class="card-text text-light">Posts:</h4>
+  <div class="list-group" *ngIf="posts">
+    <div *ngFor="let post of posts">
+      <a routerLink="" style="background-color: #302f33" (click)="toPost(post.id)" class="list-group-item list-group-item-action flex-column align-items-start active">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{user.first_name}} {{user.last_name}}</h5>
+          <small >Posted: {{post.created_at}}</small>
+        </div>
+        <h6 class="mb-1">{{post.title}}</h6>
+        <p class="mb-1">{{post.body}}</p>
+        <div>
+           <img class="post-image" *ngIf="post.image" src="http://localhost:8000{{post.image}}">
+        </div>
+        <small>Post ID:{{post.id}}</small>
+      </a>
+    </div>
+  </div>
+  <div *ngIf="!posts" style="display: flex; justify-content: center; align-items: center">
+  <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  </div>
+  <div *ngIf="posts.length===0" style="color: white; display: flex; justify-content: center; align-items: center; font-size: 44px">
+    THERE IS NOTHING TO SHOW HERE :(
   </div>
 </div>
-<div *ngIf="!posts" style="display: flex; justify-content: center; align-items: center">
-<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-</div>>

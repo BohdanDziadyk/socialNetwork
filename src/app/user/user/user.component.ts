@@ -40,7 +40,6 @@ export class UserComponent implements OnInit {
   }
 
   deleteFriend(id) {
-    console.log(id);
     this.userAccountService.deleteFriend(id, status).subscribe(value => this.ngOnInit())
   }
 }

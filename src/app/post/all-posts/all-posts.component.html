@@ -1,5 +1,7 @@
-<router-outlet></router-outlet>
-<div *ngIf="!posts" style="color: white; display: flex; justify-content: center; align-items: center; font-size: 44px">
+<div *ngIf="!posts" style="display: flex; justify-content: center; align-items: center">
+  <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
+<div *ngIf="posts.length===0" style="color: white; display: flex; justify-content: center; align-items: center; font-size: 44px">
   THERE IS NOTHING TO SHOW HERE :(
 </div>
 <div class="list-group">

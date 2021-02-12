@@ -1,72 +1,80 @@
-<div class="jumbotron" *ngIf="post">
-  <h2 *ngIf="postUser">{{postUser.first_name}} {{postUser.last_name}}</h2>
-  <h3 class="display-4">{{post.title}}</h3>
-  <p class="lead">{{post.body}}</p>
-  <img class="post-image" *ngIf="post.image" src="{{post.image}}">
-  <hr class="my-4">
-  <div *ngIf="!showEditForm()" class="special">
-    <button style="margin-right: 20px" type="button" class="btn-warning" (click)="changeEditFlag()">Edit</button>
-    <button type="button" class="btn-danger" (click)="deletePost(post.id)">Delete</button>
+<div *ngIf="!post" style="display: flex; justify-content: center; align-items: center">
+  <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
+<div *ngIf="post">
+  <div class="jumbotron">
+    <h2 *ngIf="postUser">{{postUser.first_name}} {{postUser.last_name}}</h2>
+    <h3 class="display-4">{{post.title}}</h3>
+    <p class="lead">{{post.body}}</p>
+    <img class="post-image" *ngIf="post.image" src="{{post.image}}">
+    <hr class="my-4">
+    <div *ngIf="!showEditForm()" class="special">
+      <button style="margin-right: 20px" type="button" class="btn-warning" (click)="changeEditFlag()">Edit</button>
+      <button type="button" class="btn-danger" (click)="deletePost(post.id)">Delete</button>
+    </div>
+    <div *ngIf="showEditForm()">
+      <form [formGroup]="editForm">
+        <div>
+          <input type="text" class="form-control" [formControl]="title"  placeholder="Type title of your post...">
+        </div>
+        <div>
+          <textarea  class="form-control" [formControl]="body"  placeholder="Type your post here..."></textarea>
+        </div>
+        <div>
+          <input style="color: black" type = file [formControl]="image" (change)="onFileUpload($event)">
+        </div>
+        <button type="submit" style="margin-right: 20px" class="btn-warning" (click)="editPost(editForm, post.id)">Edit</button>
+        <button type="button" class="btn-info" (click)="changeEditFlag()">Cancel</button>
+      </form>
+    </div>
+    <hr class="my-4">
+    <div>
+    <form [formGroup]="commentForm">
+      <textarea class="form-control" [formControl]="commentBody" placeholder="Comment this post..."></textarea>
+      <div>
+          <input style="color: black" type = file [formControl]="commentImage" (change)="onCommentFileUpload($event)">
+      </div>
+      <button class="btn-primary" [disabled]="!commentForm.valid" type="submit" (click)="doComment(commentForm)">Add comment</button>
+    </form>
+    </div>
   </div>
-  <div *ngIf="showEditForm()">
-    <form [formGroup]="editForm">
+  <h4 class="card-text text-light">Comments:</h4>
+  <div *ngIf="!comments" style="display: flex; justify-content: center; align-items: center">
+  <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  </div>
+  <div *ngIf="comments.length===0" style="color: white; display: flex; justify-content: center; align-items: center; font-size: 44px">
+    THERE IS NOTHING TO SHOW HERE :(
+  </div>
+  <div *ngIf="showCommentEditForm()">
+    <form [formGroup]="commentEditForm">
       <div>
-        <input type="text" class="form-control" [formControl]="title"  placeholder="Type title of your post...">
+        <textarea class="form-control" [formControl]="editedCommentBody" placeholder="Type your comment here"></textarea>
       </div>
       <div>
-        <textarea  class="form-control" [formControl]="body"  placeholder="Type your post here..."></textarea>
+          <input style="color: white" type = file [formControl]="editedCommentImage" (change)="onEditCommentFileUpload($event)">
       </div>
       <div>
-        <input style="color: black" type = file [formControl]="image" (change)="onFileUpload($event)">
+        <button type="submit" style="margin-right: 20px" class="btn-warning" (click)="editComment(commentEditForm)">Edit</button>
+        <button type="button" class="btn-info" (click)="changeCommentEditFlag(comment)">Cancel</button>
       </div>
-      <button type="submit" style="margin-right: 20px" class="btn-warning" (click)="editPost(editForm, post.id)">Edit</button>
-      <button type="button" class="btn-info" (click)="changeEditFlag()">Cancel</button>
     </form>
   </div>
-  <hr class="my-4">
-  <div>
-  <form [formGroup]="commentForm">
-    <textarea class="form-control" [formControl]="commentBody" placeholder="Comment this post..."></textarea>
-    <div>
-        <input style="color: black" type = file [formControl]="commentImage" (change)="onCommentFileUpload($event)">
+  <div class="list-group" *ngIf="comments">
+    <div *ngFor="let comment of comments">
+      <a style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{comment.body}}</h5>
+          <small>Comment ID: {{comment.id}}</small>
+        </div>
+        <img class="comment-image" *ngIf="comment.image" src="{{comment.image}}">
+        <div><small>User ID: {{comment.user}}</small></div>
+        <div><small>Posted:{{comment.created_at}}</small></div>
+        <div><small>Last update:{{comment.updated_at}}</small></div>
+        <div *ngIf="!showCommentEditForm() && post.user === comment.user" class="special">
+          <button style="margin-right: 20px" type="button" class="btn-warning" (click)="changeCommentEditFlag(comment)">Edit</button>
+          <button type="button" class="btn-danger" (click)="deleteComment(comment.id)">Delete</button>
+        </div>
+      </a>
     </div>
-    <button class="btn-primary" [disabled]="!commentForm.valid" type="submit" (click)="doComment(commentForm)">Add comment</button>
-  </form>
-  </div>
-</div>
-<h4 class="card-text text-light">Comments:</h4>
-<div *ngIf="!comments" style="color: white; display: flex; justify-content: center; align-items: center; font-size: 44px">
-  THERE IS NOTHING TO SHOW HERE :(
-</div>
-<div *ngIf="showCommentEditForm()">
-  <form [formGroup]="commentEditForm">
-    <div>
-      <textarea class="form-control" [formControl]="editedCommentBody" placeholder="Type your comment here"></textarea>
-    </div>
-    <div>
-        <input style="color: white" type = file [formControl]="editedCommentImage" (change)="onEditCommentFileUpload($event)">
-    </div>
-    <div>
-      <button type="submit" style="margin-right: 20px" class="btn-warning" (click)="editComment(commentEditForm)">Edit</button>
-      <button type="button" class="btn-info" (click)="changeCommentEditFlag(comment)">Cancel</button>
-    </div>
-  </form>
-</div>
-<div class="list-group" *ngIf="comments">
-  <div *ngFor="let comment of comments">
-    <a style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{comment.body}}</h5>
-        <small>Comment ID: {{comment.id}}</small>
-      </div>
-      <img class="comment-image" *ngIf="comment.image" src="{{comment.image}}">
-      <div><small>User ID: {{comment.user}}</small></div>
-      <div><small>Posted:{{comment.created_at}}</small></div>
-      <div><small>Last update:{{comment.updated_at}}</small></div>
-      <div *ngIf="!showCommentEditForm() && post.user === comment.user" class="special">
-        <button style="margin-right: 20px" type="button" class="btn-warning" (click)="changeCommentEditFlag(comment)">Edit</button>
-        <button type="button" class="btn-danger" (click)="deleteComment(comment.id)">Delete</button>
-      </div>
-    </a>
   </div>
 </div>

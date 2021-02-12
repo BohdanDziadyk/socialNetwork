@@ -1,5 +1,8 @@
 <div>
   <h4 class="card-text text-light">Friend Requests:</h4>
+  <div *ngIf="!friendRequests" style="display: flex; justify-content: center; align-items: center">
+    <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  </div>
   <div *ngIf="friendRequests">
     <div class="list-group">
       <div *ngFor="let friendRequest of friendRequests">
@@ -21,6 +24,9 @@
 </div>
 <div>
   <h4 class="card-text text-light">Friends:</h4>
+  <div *ngIf="!friends" style="display: flex; justify-content: center; align-items: center">
+    <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  </div>
   <div *ngIf="friends">
     <div class="card" style="width: 18rem; float: left; margin-left: 1.3rem; margin-bottom: 1rem; border: silver 1px solid; background-color: #302f33" *ngFor="let friend of friends">
       <img class="card-img-top" src="https://picsum.photos/id/{{friend.id}}/200/300" alt="Card image cap">
