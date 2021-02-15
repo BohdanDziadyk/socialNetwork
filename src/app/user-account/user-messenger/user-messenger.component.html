@@ -1,4 +1,4 @@
-<div class="float-left">
+<div class="float-left w-25 h-100">
   <h4 class="card-text text-light">Chats:</h4>
   <div class="list-group" *ngIf="chats">
     <div *ngFor="let chat of chats">
@@ -10,39 +10,35 @@
     </div>
   </div>
 </div>
-<div>
+<div class="w-75 offset-3">
   <h4 class="card-text text-light">Chat:</h4>
-  <div class="list-group" *ngIf="activeChat">
-    <div *ngFor="let message of activeChat">
-      <a style="background-color: #302f33" [ngClass]="{'justify-content-end':message.sender===this.user.id}"
-         class="d-flex list-group-item list-group-item-action flex-column align-items-start active">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 *ngIf="message.sender!=this.user.id" class="mb-1">{{message.sender_name}}</h5>
-          <small *ngIf="message.sender!=this.user.id" >Sended: {{message.created_at}}</small>
-          <small *ngIf="message.sender==this.user.id" >Sended: {{message.created_at}}</small>
-          <h5 *ngIf="message.sender==this.user.id" class="mb-1">{{message.sender_name}}</h5>
-        </div>
-        <h6 class="mb-1">{{message.body}}</h6>
+  <div style="background-color: #302f33" class="list-group-item active" *ngIf="activeChat">
+    <div class="w-100">
+      <div *ngFor="let message of activeChat" class="d-flex w-100" [ngClass]="{'justify-content-end':message.sender===this.user.id}">
+        <a style="background-color: #302f33" class="message d-flex list-group-item flex-column active">
+          <h5  class="mb-1">{{message.sender_name}}</h5>
+          <h6 class="mb-1">{{message.body}}</h6>
+          <div>
+            <img class="post-image" *ngIf="message.image" src="http://localhost:8000{{message.image}}">
+          </div>
+          <small >Sended: {{message.created_at}}</small>
+          <small>Message ID:{{message.id}}</small>
+        </a>
+      </div>
+    </div>
+    <div class="form">
+      <form [formGroup]="form" enctype="multipart/form-data">
         <div>
-          <img class="post-image" *ngIf="message.image" src="http://localhost:8000{{message.image}}">
+        <textarea class="form-control" type="text" [formControl]="body" placeholder="Write something..."></textarea>
         </div>
-        <small>Message ID:{{message.id}}</small>
-      </a>
+        <div>
+          <input style="color: white" type = file [formControl]="image" (change)="onFileUpload($event)">
+        </div>
+        <div>
+          <button class="btn-primary" [disabled]="!form.valid" type="submit" (click)="send(form)">Send</button>
+        </div>
+      </form>
     </div>
   </div>
-  <div class="form" *ngIf="activeChat">
-    <form [formGroup]="form" enctype="multipart/form-data">
-      <div>
-      <textarea class="form-control" type="text" [formControl]="body" placeholder="Write something..."></textarea>
-      </div>
-      <div>
-        <input style="color: white" type = file [formControl]="image" (change)="onFileUpload($event)">
-      </div>
-      <div>
-        <button class="btn-primary" [disabled]="!form.valid" type="submit" (click)="send(form)">Send</button>
-      </div>
-    </form>
-  </div>
 </div>
-
 

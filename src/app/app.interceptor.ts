@@ -31,7 +31,7 @@ export class AppInterceptor implements HttpInterceptor {
         console.log(res.error);
       }
       if (res.status === 403) { // если 403 ошибка переходим на страницу логинации
-        alert("403")
+        alert(JSON.stringify(res.error))
         this.router.navigate(['auth/login'], {
           queryParams: {
             sessionFailed: true
@@ -39,7 +39,7 @@ export class AppInterceptor implements HttpInterceptor {
         });
       }
       if (res.status === 400) { // если 403 ошибка переходим на страницу логинации
-        alert("400")
+        alert(JSON.stringify(res.error))
       }
     })) as any;
   }

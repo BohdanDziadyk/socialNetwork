@@ -76,7 +76,9 @@ export class UserAccountService {
   getUserMessages(): Observable<Message[]> {
     return this.httpClient.get<Message[]>(`${this.URL}messages`)
   }
-
+  getUserChat(id): Observable<Message[]> {
+    return this.httpClient.get<Message[]>(`${this.URL}messages/chat/${id}`)
+  }
   sendMessage(formData): Observable<any> {
     return this.httpClient.post<any>(`${this.URL}messages`, formData)
   }

@@ -13,6 +13,7 @@ export class UserMessengerComponent implements OnInit {
   user: User;
   messages: Message[];
   chats: any;
+  receiver_id: number;
   activeChat: Message[];
   form: FormGroup;
   body: FormControl = new FormControl('', [Validators.required])
@@ -30,16 +31,34 @@ export class UserMessengerComponent implements OnInit {
       .subscribe(user => this.chats = new Set(messages.map(message=> message.sender_name)
         .filter(value=> value !== user.username  ))))
     this.userAccountService.getCurrentUser().subscribe(value => this.user = value)
+    if (this.receiver_id){
+      this.userAccountService.getUserChat(this.receiver_id).subscribe(messages=> this.activeChat = messages.sort(function(message1, message2){
+      if(message1.id < message2.id){
+        return -1;
+      }
+      if(message1.id > message2.id){
+        return 1;
+      }
+    }))
+    }
   }
 
   toChat(chat){
     this.activeChat = this.messages.filter(message=> message.sender_name === chat)
-    let receiver_id = this.activeChat[0].sender
+    this.receiver_id = this.activeChat[0].sender
     for (let message of this.messages){
-      if(message.sender === this.user.id && message.receiver === receiver_id){
+      if(message.sender === this.user.id && message.receiver === this.receiver_id){
         this.activeChat.push(message)
       }
     }
+    this.activeChat.sort(function(message1, message2){
+      if(message1.id < message2.id){
+        return -1;
+      }
+      if(message1.id > message2.id){
+        return 1;
+      }
+    })
   }
   onFileUpload(event: any) {
     const[file] = event.target.files;
@@ -47,20 +66,9 @@ export class UserMessengerComponent implements OnInit {
   }
   send(form: FormGroup): void{
     const formData = new FormData();
-    let receiver: number= null;
-    for (let message of this.activeChat){
-      console.log(message);
-      if (message.sender === this.user.id){
-        receiver = message.receiver
-      }
-      else{
-        receiver = message.sender
-      }
-    }
-    console.log(receiver);
-    formData.set('image', form.get('image').value);
-    formData.set('receiver', `${receiver}`);
+    formData.set('receiver', `${this.receiver_id}`);
     formData.set('body', form.controls.body.value);
+    formData.set('image', form.get('image').value);
     form.reset()
     this.userAccountService.sendMessage(formData).subscribe(value=> this.ngOnInit());
   }
