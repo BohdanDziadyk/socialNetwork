@@ -82,4 +82,7 @@ export class UserAccountService {
   sendMessage(formData): Observable<any> {
     return this.httpClient.post<any>(`${this.URL}messages`, formData)
   }
+  changeAccount(formData, id): Observable<any>{
+    return this.httpClient.patch<any>(`${this.URL}${id}`, formData)
+  }
 }

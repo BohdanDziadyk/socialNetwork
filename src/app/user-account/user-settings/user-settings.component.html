@@ -1,0 +1,30 @@
+<div class="w-25">
+  <h5 class="mb-1 text-white">Here you can change your personal data, like your name, email, etc.</h5>
+</div>
+<div class="form w-50 offset-3">
+    <form [formGroup]="form" enctype="multipart/form-data">
+      <div>
+        <label class="mb-1 text-white">First Name:</label>
+      <input class="form-control" type="text" [formControl]="first_name" placeholder="Type your first name here...">
+      </div>
+      <div>
+        <label class="mb-1 text-white">Last Name:</label>
+      <input class="form-control" type="text" [formControl]="last_name" placeholder="Type your last name here...">
+      </div>
+      <div>
+        <label class="mb-1 text-white">Email:</label>
+      <input class="form-control" type="email" [formControl]="email" placeholder="Type your email here...">
+      </div>
+      <div>
+        <label class="mb-1 text-white">Phone:</label>
+      <input class="form-control" type="text" [formControl]="phone" placeholder="Type your phone here...">
+      </div>
+      <div>
+        <label class="mb-1 text-white">Profile image:</label>
+        <input style="color: white" type = file [formControl]="image" (change)="onFileUpload($event)">
+      </div>
+      <div>
+        <button class="btn-primary" [disabled]="!form.valid" type="submit" (click)="save(form)">Save</button>
+      </div>
+    </form>
+</div>

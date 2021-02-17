@@ -13,7 +13,8 @@
     <ol class="special navbar-nav">
         <li *ngIf="!isAuthorized()" class="nav-item"><a class="nav-link" routerLink="auth/login">Sign In</a></li>
         <li *ngIf="!isAuthorized()" class="nav-item"><a class="nav-link" routerLink="auth/register">Sign Up</a></li>
-        <li *ngIf="isAuthorized()" class="nav-item"><a  class="nav-link" routerLink="my_account">My account</a></li>
+        <li *ngIf="isAuthorized()" class="nav-item"><a  class="nav-link" routerLink="my_account">{{user.first_name}} {{user.last_name}}</a></li>
+        <li *ngIf="isAuthorized()" class="nav-item"><a  class="nav-link" routerLink="my_account/settings">Settings</a></li>
         <li *ngIf="isAuthorized()" class="nav-item"><a (click)="logOut()" class="nav-link" routerLink="auth/login">Sign Out</a></li>
     </ol>
   </nav>

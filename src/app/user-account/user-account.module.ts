@@ -8,11 +8,12 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { UserPostComponent } from './user-post/user-post.component';
 import { UserFriendsComponent } from './user-friends/user-friends.component';
 import { UserMessengerComponent } from './user-messenger/user-messenger.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 
 
 @NgModule({
-  declarations: [UserAccountComponent, UserPostsComponent, UserCommentsComponent, UserPostComponent, UserFriendsComponent, UserMessengerComponent],
+  declarations: [UserAccountComponent, UserPostsComponent, UserCommentsComponent, UserPostComponent, UserFriendsComponent, UserMessengerComponent, UserSettingsComponent],
     imports: [
         CommonModule,
         RouterModule.forChild([
@@ -21,7 +22,8 @@ import { UserMessengerComponent } from './user-messenger/user-messenger.componen
             {path: "posts/:id", component:UserPostComponent},
             {path: 'comments', component: UserCommentsComponent},
             {path: 'friends', component: UserFriendsComponent},
-            {path: 'messenger', component: UserMessengerComponent}
+            {path: 'messenger', component: UserMessengerComponent},
+            {path: 'settings', component:UserSettingsComponent}
         ]),
         ReactiveFormsModule
     ]

@@ -5,6 +5,7 @@ export interface User {
   username: string;
   email: string;
   phone: string;
+  image: any;
   last_login: string;
   is_superuser: boolean;
   is_staff: boolean;

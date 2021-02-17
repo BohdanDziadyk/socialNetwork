@@ -3,7 +3,8 @@
 </div>
 <div *ngIf="user">
   <div style="float: left; width: 30%; display: flex; flex-direction: column; padding-left: 3.5%">
-    <img class="avatar" src="https://picsum.photos/id/{{user.id}}/200/300" alt="Card image cap">
+    <img class="avatar" *ngIf="!image" src="https://picsum.photos/id/{{user.id}}/200/300" alt="Card image cap">
+    <img class="avatar" *ngIf="image" src="http://localhost:8000{{user.image}}" alt="Card image cap">
     <h3 class="card-title text-light list-group-item active">{{user.first_name}} {{user.last_name}}</h3>
     <h4 class="card-text text-light">Nickname:{{user.username}}</h4>
     <h4 class="card-text text-light list-group-item active">Email address:{{user.email}}</h4>
