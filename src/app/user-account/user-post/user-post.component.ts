@@ -18,6 +18,7 @@ export class UserPostComponent implements OnInit {
   @Input()
   postUser: User;
   commentUser: User;
+  currentUser:User;
   post: Post;
   comments: Comment[];
   comment: Comment;
@@ -115,6 +116,7 @@ export class UserPostComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userAccountService.getCurrentUser().subscribe(value => this.currentUser = value)
     this.activatedRoute.params.subscribe(value => this.postService.getPost(value.id).subscribe(value1 => this.post = value1));
     this.activatedRoute.params.subscribe(value => this.commentService.getCommentByPostId(value.id)
       .subscribe(value1 => this.comments = value1));
