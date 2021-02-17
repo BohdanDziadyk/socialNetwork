@@ -8,6 +8,10 @@
     <p class="lead">{{post.body}}</p>
     <img class="post-image" *ngIf="post.image" src="{{post.image}}">
     <hr class="my-4">
+    <div *ngIf="currentUser">
+      <button *ngIf="currentUser.is_superuser||currentUser.is_staff" type="submit" class="btn-danger" (click)="deletePostByAdmin(post.id)">Delete post(with admin permissions)</button>
+    </div>
+    <hr class="my-4">
     <div>
     <form [formGroup]="form">
       <textarea class="form-control" [formControl]="body" placeholder="Comment this post..."></textarea>
@@ -43,16 +47,17 @@
     <div *ngFor="let comment of comments">
       <a style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
         <div class="d-flex w-100 justify-content-between">
-          <h6 class="mb-1">Author:{{comment.user}}</h6>
+          <h6 class="mb-1">{{comment.username}}</h6>
           <small>Comment ID: {{comment.id}}</small>
         </div>
         <h5 class="mb-1">{{comment.body}}</h5>
         <img class="comment-image" *ngIf="comment.image" src="{{comment.image}}">
         <div><small>Posted:{{comment.created_at}}</small></div>
         <div><small>Last update:{{comment.updated_at}}</small></div>
-        <div *ngIf="!showCommentEditForm() && commentUser.id === comment.user" class="special">
-          <button style="margin-right: 20px" type="button" class="btn-warning" (click)="changeCommentEditFlag(comment)">Edit</button>
-          <button type="button" class="btn-danger" (click)="deleteComment(comment.id)">Delete</button>
+        <div *ngIf="!showCommentEditForm() && commentUser.id === comment.user||currentUser.is_staff||currentUser.is_superuser"
+             class="special">
+          <button style="margin-right: 20px" type="button" class="btn-warning" (click)="changeCommentEditFlag(comment)">{{currentUser.is_staff||currentUser.is_superuser?"Edit(with admin permissions)":"Edit"}}</button>
+          <button type="button" class="btn-danger" (click)="deleteComment(comment.id)">{{currentUser.is_staff||currentUser.is_superuser?"Delete(with admin permissions)":"Delete"}}</button>
         </div>
       </a>
     </div>

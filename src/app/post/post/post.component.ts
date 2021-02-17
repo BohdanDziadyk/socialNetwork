@@ -16,6 +16,7 @@ import {UserAccountService} from "../../user-account/services/user-account.servi
 })
 export class PostComponent implements OnInit {
   @Input()
+  currentUser:User;
   postUser: User;
   commentUser: User;
   post: Post;
@@ -78,8 +79,11 @@ export class PostComponent implements OnInit {
     const [file] = event.target.files;
     this.commentEditForm.patchValue({editedCommentImage: file})
   }
-
+  deletePostByAdmin(id){
+    this.postService.deletePostByAdmin(id).subscribe(value => history.back())
+  }
   ngOnInit(): void {
+    this.userAccountService.getCurrentUser().subscribe(value => this.currentUser = value)
     this.activatedRoute.params.subscribe(value => this.postService.getPost(value.id).subscribe(value1 => this.post = value1));
     this.activatedRoute.params.subscribe(value => this.commentService.getCommentByPostId(value.id)
       .subscribe(value1 => this.comments = value1));

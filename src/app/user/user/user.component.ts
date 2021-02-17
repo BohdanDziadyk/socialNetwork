@@ -16,6 +16,7 @@ import {UserAccountService} from "../../user-account/services/user-account.servi
 export class UserComponent implements OnInit {
   posts: Post[];
   @Input()
+  currentUser:User;
   user: User;
   friendRequestResponse: string;
   friends: User[];
@@ -24,6 +25,7 @@ export class UserComponent implements OnInit {
   }
   ngOnInit(): void {
     this.friendRequestResponse = null;
+    this.userAccountService.getCurrentUser().subscribe(value => this.currentUser = value)
     this.activatedRoute.params.subscribe(value => this.userService.getUser(+value.id).subscribe(value1 => this.user = value1));
     this.activatedRoute.params.subscribe(value => this.postService.getPostsByUserId(value.id).subscribe(value1 => this.posts = value1));
     this.userAccountService.getUserFriends().subscribe(value => this.activatedRoute.params.subscribe(value1 => this.isFriend = value.some(value2 => value1.id == value2.id)));
@@ -41,5 +43,11 @@ export class UserComponent implements OnInit {
 
   deleteFriend(id) {
     this.userAccountService.deleteFriend(id, status).subscribe(value => this.ngOnInit())
+  }
+  blockUserAsAdmin(){
+    this.userService.changeAccountStatusAsAdmin(this.user.id,{is_active: 0}).subscribe(value => this.ngOnInit())
+  }
+  unblockUserAsAdmin(){
+    this.userService.changeAccountStatusAsAdmin(this.user.id,{is_active: 1}).subscribe(value => this.ngOnInit())
   }
 }

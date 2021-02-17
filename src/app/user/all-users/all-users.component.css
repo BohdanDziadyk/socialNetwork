@@ -82,3 +82,9 @@
     transform: rotate(360deg);
   }
 }
+.small_avatar{
+  object-fit: cover;
+
+  width: 286px;
+  height: 429px;
+}

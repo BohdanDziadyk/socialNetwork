@@ -24,7 +24,7 @@ export class LogInComponent implements OnInit {
   logIn(form: FormGroup): void {
     this.authorizationService.logIn(form.getRawValue()).subscribe(() => {
       this.router.navigate(['my_account']);
-    }, err => this.error = err.detail)
+    }, err => console.log(err))
   }
 
   ngOnInit(): void {

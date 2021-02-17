@@ -28,5 +28,8 @@ export class PostService {
   doComment(formData): Observable<any>{
     return this.httpClient.post<any>(`http://localhost:8000/user_account/comments`, formData)
   }
+  deletePostByAdmin(id): Observable<any>{
+    return this.httpClient.delete<any>(`${this.URL}${id}`)
+  }
 }
 

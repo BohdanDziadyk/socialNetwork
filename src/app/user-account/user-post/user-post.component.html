@@ -63,16 +63,16 @@
     <div *ngFor="let comment of comments">
       <a style="background-color: #302f33" class="list-group-item list-group-item-action flex-column align-items-start active">
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{comment.body}}</h5>
+          <h6 class="mb-1">{{comment.username}}</h6>
           <small>Comment ID: {{comment.id}}</small>
         </div>
+        <h5 class="mb-1">{{comment.body}}</h5>
         <img class="comment-image" *ngIf="comment.image" src="{{comment.image}}">
-        <div><small>User ID: {{comment.user}}</small></div>
         <div><small>Posted:{{comment.created_at}}</small></div>
         <div><small>Last update:{{comment.updated_at}}</small></div>
-        <div *ngIf="!showCommentEditForm() && post.user === comment.user" class="special">
-          <button style="margin-right: 20px" type="button" class="btn-warning" (click)="changeCommentEditFlag(comment)">Edit</button>
-          <button type="button" class="btn-danger" (click)="deleteComment(comment.id)">Delete</button>
+        <div *ngIf="!showCommentEditForm() && post.user === comment.user||currentUser.is_staff||currentUser.is_superuser" class="special">
+          <button style="margin-right: 20px" type="button" class="btn-warning" (click)="changeCommentEditFlag(comment)">{{currentUser.is_staff||currentUser.is_superuser?"Edit(with admin permissions)":"Edit"}}</button>
+          <button type="button" class="btn-danger" (click)="deleteComment(comment.id)">{{currentUser.is_staff||currentUser.is_superuser?"Delete(with admin permissions)":"Delete"}}</button>
         </div>
       </a>
     </div>

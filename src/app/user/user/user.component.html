@@ -1,21 +1,27 @@
 <div *ngIf="!user" style="display: flex; justify-content: center; align-items: center">
   <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </div>
-<div *ngIf="user">
+<div *ngIf="!user.is_active" style="display: flex; justify-content: center; align-items: center; flex-direction: column">
+  <h4 class="mb-1 text-white">{{user.username}} account is blocked due to violation our Terms of Service.</h4>
+  <button *ngIf="currentUser.is_superuser" class="btn-warning" (click)="unblockUserAsAdmin()">Unblock account(with admin permissions)</button>
+</div>
+<div *ngIf="user&&user.is_active">
   <div style="float: left; width: 30%; display: flex; flex-direction: column; padding-left: 3.5%">
-    <img class="avatar" src="https://picsum.photos/id/{{user.id}}/200/300" alt="Card image cap">
+    <img class="avatar" *ngIf="!user.image" src="https://picsum.photos/id/{{user.id}}/200/300" alt="Card image cap">
+    <img class="avatar" *ngIf="user.image" src="{{user.image}}" alt="Card image cap">
     <h3 class="card-title text-light list-group-item active">{{user.first_name}} {{user.last_name}}</h3>
-    <h4 class="card-text text-light">Nickname:{{user.username}}</h4>
-    <h4 class="card-text text-light list-group-item active">Email address:{{user.email}}</h4>
-    <h4 class="card-text text-light">Phone:{{user.phone}}</h4>
-    <h4 class="card-text text-light list-group-item active" >Last time online:{{user.last_login}}</h4>
-    <h4 class="card-text text-light ">In our network since:{{user.date_joined}}</h4>
-    <h4 *ngIf="user.is_staff && !user.is_superuser" class="card-text text-light list-group-item active">Moderator</h4>
-    <h4 *ngIf="user.is_superuser" class="card-text text-light list-group-item active">Administrator</h4>
-    <h4 *ngIf="!user.is_staff && !user.is_superuser" class="card-text text-light list-group-item active">User</h4>
-    <button class="btn-danger" *ngIf="isFriend" (click)="deleteFriend(user.id)">Delete friend</button>
-    <button class="btn-primary" *ngIf="!isFriend" (click)="sendFriendRequest(user.id)">{{ this.friendRequestResponse ? this.friendRequestResponse : 'Send friend request'}}</button>
-  </div>
+      <h4 class="card-text text-light">Nickname:{{user.username}}</h4>
+      <h4 class="card-text text-light list-group-item active">Email address:{{user.email}}</h4>
+      <h4 class="card-text text-light">Phone:{{user.phone}}</h4>
+      <h4 class="card-text text-light list-group-item active" >Last time online:{{user.last_login}}</h4>
+      <h4 class="card-text text-light ">In our network since:{{user.date_joined}}</h4>
+      <h4 *ngIf="user.is_staff && !user.is_superuser" class="card-text text-light list-group-item active">Moderator</h4>
+      <h4 *ngIf="user.is_superuser" class="card-text text-light list-group-item active">Administrator</h4>
+      <h4 *ngIf="!user.is_staff && !user.is_superuser" class="card-text text-light list-group-item active">User</h4>
+      <button class="btn-danger" *ngIf="isFriend" (click)="deleteFriend(user.id)">Delete friend</button>
+      <button class="btn-primary" *ngIf="!isFriend" (click)="sendFriendRequest(user.id)">{{ this.friendRequestResponse ? this.friendRequestResponse : 'Send friend request'}}</button>
+      <button class="btn-danger" *ngIf="currentUser.is_superuser" (click)="blockUserAsAdmin()">Block account(with admin permissions)</button>
+    </div>
   <h4 class="card-text text-light">Posts:</h4>
   <div class="list-group" *ngIf="posts">
     <div *ngFor="let post of posts">

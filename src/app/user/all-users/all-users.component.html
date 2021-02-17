@@ -3,7 +3,8 @@
 </div>
 <div *ngIf="users">
   <div class="card" style="width: 18rem; float: left; margin-left: 1.3rem; margin-bottom: 1rem; border: silver 1px solid; background-color: #302f33" *ngFor="let user of users">
-    <img class="card-img-top" src="https://picsum.photos/id/{{user.id}}/200/300" alt="Card image cap">
+    <img class="small_avatar" *ngIf="!user.image" src="https://picsum.photos/id/{{user.id}}/200/300" alt="Card image cap">
+    <img class="small_avatar" style="object-fit: scale-down" *ngIf="user.image" src="http://localhost:8000{{user.image}}" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title text-light">{{user.first_name}}</h5>
       <h5 class="card-title text-light">{{user.last_name}}</h5>

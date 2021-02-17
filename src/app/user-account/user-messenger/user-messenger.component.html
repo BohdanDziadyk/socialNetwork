@@ -1,19 +1,25 @@
 <div class="float-left w-25 h-100">
   <h4 class="card-text text-light">Chats:</h4>
-  <div class="list-group" *ngIf="chats">
-    <div *ngFor="let chat of chats">
+  <div class="list-group" *ngIf="user">
+    <div *ngFor="let user of users">
         <a style="background-color: #302f33"
            class="list-group-item list-group-item-action flex-column align-items-start active"
-           routerLink="user_account/messenger" (click)="toChat(chat)">
-          <h5 class="mb-1">{{chat}}</h5>
+           routerLink="user_account/messenger" (click)="toChat(user.id)">
+          <h5 class="mb-1">{{user.username}}</h5>
         </a>
     </div>
   </div>
 </div>
 <div class="w-75 offset-3">
   <h4 class="card-text text-light">Chat:</h4>
+  <div style="background-color: #302f33" class="list-group-item active" *ngIf="!activeChat">
+    <h5 class="mb-1">Select a chat to start messaging...</h5>
+  </div>
   <div style="background-color: #302f33" class="list-group-item active" *ngIf="activeChat">
     <div class="w-100">
+      <div style="background-color: #302f33" class="list-group-item active" *ngIf="activeChat.length===0">
+        <h5 class="mb-1">There are no messages in this chat yet...</h5>
+      </div>
       <div *ngFor="let message of activeChat" class="d-flex w-100" [ngClass]="{'justify-content-end':message.sender===this.user.id}">
         <a style="background-color: #302f33" class="message d-flex list-group-item flex-column active">
           <h5  class="mb-1">{{message.sender_name}}</h5>

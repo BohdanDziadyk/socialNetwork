@@ -31,15 +31,21 @@ export class AppInterceptor implements HttpInterceptor {
         console.log(res.error);
       }
       if (res.status === 403) { // если 403 ошибка переходим на страницу логинации
-        alert(JSON.stringify(res.error))
+        alert('Error 403. Your session was ended.Please log in again.')
         this.router.navigate(['auth/login'], {
           queryParams: {
             sessionFailed: true
           }
         });
       }
-      if (res.status === 400) { // если 403 ошибка переходим на страницу логинации
-        alert(JSON.stringify(res.error))
+      if (res.status === 500){
+        alert("Error 500. Internal server error.")
+      }
+      if (res.status === 400 && res.error.refresh) {
+        alert("Given credentials is not valid or your account was blocked")
+      }
+      else if (res.status === 400) {
+        alert("Error 400. Something went wrong.")
       }
     })) as any;
   }

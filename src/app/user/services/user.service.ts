@@ -15,4 +15,7 @@ export class UserService {
   getUser(id: number): Observable<User>{
     return this.httpClient.get<User>(`${this.URL}${id}`);
   }
+  changeAccountStatusAsAdmin(id, value):Observable<User>{
+    return this.httpClient.patch<User>(`${this.URL}${id}`,value)
+  }
 }
