@@ -1,4 +1,4 @@
-<div class="w-25">
+<div class="w-25 float-left">
   <h5 class="mb-1 text-white">Here you can change your personal data, like your name, email, etc.</h5>
 </div>
 <div class="form w-50 offset-3">
@@ -26,5 +26,24 @@
       <div>
         <button class="btn-primary" [disabled]="!form.valid" type="submit" (click)="save(form)">Save</button>
       </div>
+    </form>
+</div>
+<hr color="white">
+<div class="w-25 float-left">
+  <h5 class="mb-1 text-white">Here you can change your password.</h5>
+</div>
+<div class="form w-50 offset-3">
+  <form [formGroup]="passwordForm">
+      <div>
+      <label style="color: white">Password*:</label>
+      <input class="form-control" type = password [formControl]="password" placeholder="Type you password here">
+      <small style="color: white" *ngIf="passwordForm.controls.password.invalid">Password must be from 8 to 16 symbols</small>
+    </div>
+    <div>
+      <label style="color: white">Password confirm*:</label>
+      <input class="form-control" type = password [formControl]="confirmPassword" placeholder="Confirm your password">
+      <small style="color: white" *ngIf="passwordForm.hasError('passwordError')">Passwords don`t match</small>
+    </div>
+      <button type="submit" [disabled]="!passwordForm.valid" class="btn-warning" (click)="changePassword(passwordForm)">Change password</button>
     </form>
 </div>

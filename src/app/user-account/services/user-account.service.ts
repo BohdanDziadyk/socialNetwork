@@ -85,4 +85,7 @@ export class UserAccountService {
   changeAccount(formData, id): Observable<any>{
     return this.httpClient.patch<any>(`${this.URL}${id}`, formData)
   }
+  changePassword(body,id): Observable<any>{
+    return this.httpClient.patch<any>(`${this.URL}password_change/${id}`, body)
+  }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserAccountService} from "../services/user-account.service";
 import {User} from "../../user/models/User";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-settings',
@@ -11,12 +12,15 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class UserSettingsComponent implements OnInit {
   user: User;
   form: FormGroup;
+  passwordForm: FormGroup;
   image: FormControl = new FormControl('')
   first_name: FormControl = new FormControl('')
   last_name: FormControl = new FormControl('')
   email: FormControl = new FormControl('', [Validators.email])
   phone: FormControl = new FormControl('')
-  constructor(private userAccountService: UserAccountService) {
+  password: FormControl = new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]);
+  confirmPassword: FormControl = new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]);
+  constructor(private userAccountService: UserAccountService, private router: Router) {
     this.form = new FormGroup({
       image: this.image,
       first_name: this.first_name,
@@ -24,6 +28,15 @@ export class UserSettingsComponent implements OnInit {
       email: this.email,
       phone: this.phone
     })
+    this.passwordForm = new FormGroup({
+      password: this.password,
+      confirmPassword: this.confirmPassword
+    }, this.passwordValidator.bind(this));
+  }
+  passwordValidator(passwordForm: FormGroup): null | object {
+    const {value : password} = passwordForm.controls.password;
+    const {value: confirmPassword} = passwordForm.controls.confirmPassword;
+    return password === confirmPassword ? null : {passwordError: true};
   }
   onFileUpload(event: any) {
     const[file] = event.target.files;
@@ -38,6 +51,11 @@ export class UserSettingsComponent implements OnInit {
     formData.set('image', form.get('image').value?form.get('image').value:this.user.image);
     form.reset()
     this.userAccountService.changeAccount(formData, this.user.id).subscribe(value => value.error?alert(value.error):alert("Changes saved"));
+  }
+  changePassword(passwordForm: FormGroup): void{
+    this.userAccountService.changePassword({password: passwordForm.controls.password.value}, this.user.id).subscribe(value => {alert(value.details);
+    this.router.navigate(['auth/login'])})
+    passwordForm.reset()
   }
   ngOnInit(): void {
     this.userAccountService.getCurrentUser().subscribe(value => this.user = value)

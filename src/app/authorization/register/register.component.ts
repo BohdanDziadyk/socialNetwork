@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
       last_name: this.last_name,
     }, this.passwordValidator.bind(this));
   }
-   passwordValidator(form: FormGroup): null | object {
+  passwordValidator(form: FormGroup): null | object {
     const {value : password} = form.controls.password;
     const {value: confirmPassword} = form.controls.confirmPassword;
     return password === confirmPassword ? null : {passwordError: true};
